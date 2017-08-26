@@ -1,0 +1,29 @@
+
+[] Stub out REST API
+[] Configure server-side framework
+	[] Install Express
+	[] Install Mongo
+	[] Get DB Access working with Promises.
+[] Configure client-side framework
+	[x] Install WebPack DevServer
+	[x] Install Babel and configure .babelrc
+	[x] Install React and React-DOM
+	[x] Create test file for /app/js/app.js
+	[x] Make sure that running "webpack" (global) will output to DIST.
+	[x] Install file-loader.
+	[x] Solve WebPack error: ERROR in Entry module not found: Error: Can't resolve 'file' in '\Projects\full-stack-coding-exercise/app'
+	[x] Solve issue with "Multiple assets emit to the same filename"
+		[x] Install html-webpack-plugin instead of using file-loader.
+	[X] Install ESLint... Use AirBnB's rules: https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
+	[x] Install React Hot Reloader
+	[x] Fix error after insalling Hot Reloader to WebPack: 'import' and 'export' may only appear at the top level (3:0)
+	[x] Install React-Router
+		[x] Create 2 basic routes for the SiteList and SiteDetail/:slug:
+	[] Install Redux
+	[] Install CSS framework
+[] Research CSS Solution.  CSS Modules ... Styled Components???
+[x] Get JSX / Babel Package for SublimeText
+[] Figure out why Sublime Text is not honoring the .editorconfig IDE settings.
+	[] Figure out why .sublime_project is not allowing Tabbed spaces.
+[x] Setup local repo with a Fork and GitFlow
+[x] Go through Readme and clarify any ambiguity.
