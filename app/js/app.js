@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SiteList from './components/SiteList.jsx';
+import Application from './components/Application.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <SiteList />,
+  <BrowserRouter>
+    <Application />
+  </BrowserRouter>
+  ,
   document.getElementById('app')
 );
   
-
-
-console.log('hello GSTV');
