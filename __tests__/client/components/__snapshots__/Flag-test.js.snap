@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flag is renderable 1`] = `
+<div
+  className="panel panel-default"
+  id={undefined}
+>
+  <div
+    className="panel-body"
+  >
+    <div
+      className="row"
+    >
+      Flag Type: 
+      GSTV - Unsellable
+    </div>
+    <div
+      className="row"
+    >
+      Start Date: 
+      2017-01-01
+    </div>
+    <div
+      className="row"
+    >
+      End Date: 
+      2018-01-01
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-lg-6 col-md-6 col-sm-6"
+      >
+        <button
+          className="btn btn-sm btn-info"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Edit
+        </button>
+      </div>
+      <div
+        className="col-lg-6 col-md-6 col-sm-6"
+      >
+        <button
+          className="btn btn-sm btn-danger"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
