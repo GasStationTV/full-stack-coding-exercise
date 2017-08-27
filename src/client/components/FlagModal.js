@@ -2,6 +2,8 @@ import React from 'react';
 import {Modal,Button,Form,FormGroup,ControlLabel,FormControl} from 'react-bootstrap';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import PropTypes from 'prop-types';
+
 const FlagModal = ({openFlag,cancelFunc,saveFunc,container,addOrEditFlag,
   siteKey,site,handleChange,handleDateChange,flagsList}) => (
     <Modal
@@ -53,5 +55,16 @@ const FlagModal = ({openFlag,cancelFunc,saveFunc,container,addOrEditFlag,
           </Modal.Footer>
         </Modal>
 );
-
+FlagModal.propTypes = {
+  openFlag: PropTypes.bool,
+  cancelFunc:PropTypes.func,
+  saveFunc:PropTypes.func,
+  container:PropTypes.node,
+  addOrEditFlag:PropTypes.bool,
+  siteKey:PropTypes.string,
+  site:PropTypes.object,
+  handleChange:PropTypes.func,
+  handleDateChange:PropTypes.func,
+  flagsList:PropTypes.array
+};
 export default FlagModal;

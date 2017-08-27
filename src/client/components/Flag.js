@@ -1,5 +1,6 @@
 import React from 'react';
 import { Panel,Row,Col,Button} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const Flag = ({flag,openModalFunc,flagIndex,siteKey,removeAlertFunc}) => (
   <Panel>
@@ -12,5 +13,11 @@ const Flag = ({flag,openModalFunc,flagIndex,siteKey,removeAlertFunc}) => (
     </Row>
   </Panel>
 );
-
+Flag.propTypes = {
+  flag: PropTypes.object,
+  openModalFunc:PropTypes.func,
+  flagIndex:PropTypes.number,
+  siteKey:PropTypes.number,
+  removeAlertFunc:PropTypes.func
+};
 export default Flag;

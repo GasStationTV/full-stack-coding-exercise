@@ -2,6 +2,8 @@ import React from 'react';
 import { Row,Col,Panel,Glyphicon,Button,Alert} from 'react-bootstrap';
 import Flag from './Flag'
 import FlagModal from './FlagModal'
+import PropTypes from 'prop-types';
+
 const FlagsGrid = ({site,toggleFunc,siteKey,modalCancelFunc,modalSaveFunc,
   openModalFunc,handleChange,handleDateChange,removeAlertFunc,handleAlertDismiss
   ,removeConfirm, flagsList}) => (
@@ -50,4 +52,18 @@ const FlagsGrid = ({site,toggleFunc,siteKey,modalCancelFunc,modalSaveFunc,
 
     </Panel>
 )
+FlagsGrid.propTypes = {
+  site: PropTypes.object,
+  toggleFunc:PropTypes.func,
+  siteKey:PropTypes.string,
+  modalCancelFunc:PropTypes.func,
+  modalSaveFunc:PropTypes.func,
+  openModalFunc:PropTypes.func,
+  handleChange:PropTypes.func,
+  handleDateChange:PropTypes.func,
+  removeAlertFunc:PropTypes.func,
+  handleAlertDismiss:PropTypes.func,
+  removeConfirm:PropTypes.func,
+  flagsList:PropTypes.array
+};
 export default FlagsGrid;

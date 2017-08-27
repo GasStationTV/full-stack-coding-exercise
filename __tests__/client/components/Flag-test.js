@@ -26,8 +26,4 @@ test('Flag is renderable', () => {
   );
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
-
-  //Execute one of prop functions (does not change snapshot)
-  console.log(tree.props)
-  console.log(component.props)
 });
