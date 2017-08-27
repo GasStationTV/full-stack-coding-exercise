@@ -1,0 +1,8 @@
+{
+  "hostName":"localhost",
+  "port":"27017",
+  "db":"gstv",
+  "user":"gstv",
+  "pwd":"gstv",
+  "authSource":"admin"
+}

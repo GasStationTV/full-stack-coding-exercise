@@ -39,9 +39,7 @@ const FlagsGrid = ({site,toggleFunc,siteKey,modalCancelFunc,modalSaveFunc,
       {site.openFlag?
         <div>
             {
-
               site.flags.map((flag,index)=>{
-                console.log("DEBUG: "+handleChange)
                 return <Col sm={12} md={2} lg={2} key={index}>
                           <Flag flag={flag} openModalFunc={openModalFunc} flagIndex={index} siteKey={siteKey} removeAlertFunc={removeAlertFunc}/>
                         </Col>
