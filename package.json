@@ -1,0 +1,33 @@
+{
+  "name": "full-stack-coding-exercise",
+  "version": "1.0.0",
+  "description": "<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js --ignore node_modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShawnCC/full-stack-coding-exercise.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShawnCC/full-stack-coding-exercise/issues"
+  },
+  "homepage": "https://github.com/ShawnCC/full-stack-coding-exercise",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.8",
+    "morgan": "^1.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "nodemon": "^1.11.0"
+  }
+}
