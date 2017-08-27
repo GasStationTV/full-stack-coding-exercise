@@ -14,13 +14,18 @@
 	[x] Solve WebPack error: ERROR in Entry module not found: Error: Can't resolve 'file' in '\Projects\full-stack-coding-exercise/app'
 	[x] Solve issue with "Multiple assets emit to the same filename"
 		[x] Install html-webpack-plugin instead of using file-loader.
+	[] Find out why WebPack 2 doesn't use a "root" for module dependencies.  How important is this?
 	[X] Install ESLint... Use AirBnB's rules: https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
 	[x] Install React Hot Reloader
 	[x] Fix error after insalling Hot Reloader to WebPack: 'import' and 'export' may only appear at the top level (3:0)
 	[x] Install React-Router
 		[x] Create 2 basic routes for the SiteList and SiteDetail/:slug:
 	[] Install Redux
+	[] Install Normalizr
+	[] Install Immutable.js
 	[] Install CSS framework
+	[x] Pollyfill the "fetch" and "promise" using WebPack, doesn't look like Babel does this.
+		[] Verify that Pollyfill worked, even if WebPack compiled OK.
 [] Research CSS Solution.  CSS Modules ... Styled Components???
 [x] Get JSX / Babel Package for SublimeText
 [] Figure out why Sublime Text is not honoring the .editorconfig IDE settings.

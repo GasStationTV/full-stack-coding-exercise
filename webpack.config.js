@@ -1,11 +1,17 @@
 const path = require('path');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
 
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filename: 'index.html',
   inject: 'body'
+})
+
+var PollyFillWebPackPlugin = new webpack.ProvidePlugin({
+  'Promise': 'es6-promise',
+  'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
 })
 
 module.exports = {
@@ -32,6 +38,6 @@ module.exports = {
     ]
   },
 
-  plugins: [HTMLWebpackPluginConfig]
+  plugins: [HTMLWebpackPluginConfig, PollyFillWebPackPlugin]
 
 };
