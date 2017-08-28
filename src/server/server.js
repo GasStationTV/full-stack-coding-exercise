@@ -15,10 +15,15 @@ dbConnectPromise.then(()=> {
   app.use(bodyParser.json())
   app.use('/api', siteRoutes);
   app.use('/api', flagRoutes);
-  app.listen(port, function () {
-  	console.log('Listening on port '+port);
-  });
+  if(!module.parent){
+    app.listen(port, function () {
+    	console.log('Listening on port '+port);
+    });
+  }  
 }, (err)=> {
   console.log(err);
   process.exit()
 });
+
+//Need to export for unit testing
+module.exports = app

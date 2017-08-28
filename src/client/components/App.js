@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Sites from './Sites'
 import Navigation from './Navigation'
-import {toggleOpenFlag,openModal,cancelModal,handleChange,saveModal,removeAlertFunc,handleAlertDismiss,removeConfirm} from '../redux/siteActions'
-import { Row} from 'react-bootstrap';
+import {toggleOpenFlag,openModal,cancelModal,handleChange,saveModal,
+  removeAlertFunc,handleAlertDismiss,removeConfirm,loadSitesFromAPI,addFlagAPI
+  ,editFlagAPI,removeFlagAPI} from '../redux/siteActions'
+import { Row,Alert} from 'react-bootstrap';
 
 class App extends Component{
   constructor(props) {
@@ -18,6 +20,12 @@ class App extends Component{
     this.handleAlertDismiss=this.handleAlertDismiss.bind(this);
     this.removeConfirm=this.removeConfirm.bind(this);
   }
+  componentWillMount(){
+    const promise=this.props.dispatch(loadSitesFromAPI());
+    promise.then(()=>{},(error)=>{
+      console.log("Application failed to load intial data")
+    })
+  }
   toggleOpenFlag(siteKey){
     this.props.dispatch(toggleOpenFlag(siteKey));
   }
@@ -28,7 +36,11 @@ class App extends Component{
     this.props.dispatch(cancelModal(siteKey,mode));
   }
   saveModal(siteKey,mode){
-    this.props.dispatch(saveModal(siteKey,mode));
+    if(mode=='ADD'){
+      this.props.dispatch(addFlagAPI(siteKey,this.props.sitesList));
+    }else{
+      this.props.dispatch(editFlagAPI(siteKey,this.props.sitesList));
+    }
   }
   handleChange(event,siteKey){
     const target = event.target;
@@ -48,7 +60,7 @@ class App extends Component{
     this.props.dispatch(handleAlertDismiss(siteKey));
   }
   removeConfirm(siteKey){
-    this.props.dispatch(removeConfirm(siteKey));
+    this.props.dispatch(removeFlagAPI(siteKey,this.props.sitesList));
   }
   render() {
     return (

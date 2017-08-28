@@ -14,7 +14,7 @@ router.route('/flag').post((req, res)=>{
     if (err)
         res.send(err);
     if (numUpdated){
-      res.json({ message: 'Flag Added' });
+      res.json(flag);
     }else{
       res.json({ message: 'Site not found' });
     }
@@ -38,19 +38,15 @@ router.route('/flag/:siteKey/:flagIndex').put((req, res) =>{
         if(err){
           res.json(err);
         }
-        res.json({ message: 'Flag Updated' });
+        res.json(flag);
       })
     }
   })
 })
 .delete((req, res) =>{
   const siteKey=req.params.siteKey;
-  console.log(req)
-  console.log(req.params)
-  console.log(req.body)
   const flagIndex=req.params.flagIndex;
   SiteSchema.find({_id:siteKey},(err,sites)=>{
-    console.log(sites)
     const site=sites[0]
     if(site.flags.lengh<flagIndex){
       res.json({ message: 'Invalid flag index' });

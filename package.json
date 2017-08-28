@@ -52,6 +52,8 @@
     "jest": "^20.0.4",
     "jest-css-modules": "^1.1.0",
     "react-test-renderer": "^15.6.1",
+    "superagent": "^3.6.0",
+    "supertest": "^3.0.0",
     "webpack": "^3.5.5",
     "webpack-node-externals": "^1.6.0"
   },
