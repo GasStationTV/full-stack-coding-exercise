@@ -1,6 +1,14 @@
 {
-  "extends": "airbnb/base",
-  "globals": {},
+  "extends": ["airbnb/base", "plugin:react/recommended"],
+  "globals": {
+    "document": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true
+  },
   "env" : {
     "node" : true
   },
@@ -16,6 +24,24 @@
     "no-else-return": 0,
     "space-before-function-paren": [0, "always"],
     "no-multi-spaces" : 0,
-    "quotes" : [2, "single"]
+    "quotes" : [2, "single"],
+    "arrow-body-style": "off",
+    "no-underscore-dangle": "off",
+    "no-class-assign": "off",
+    "class-methods-use-this": ["error", {
+      "exceptMethods": [
+        "render",
+        "getInitialState",
+        "getDefaultProps",
+        "getChildContext",
+        "componentWillMount",
+        "componentDidMount",
+        "componentWillReceiveProps",
+        "shouldComponentUpdate",
+        "componentWillUpdate",
+        "componentDidUpdate",
+        "componentWillUnmount"
+      ]
+    }]
   }
 }
