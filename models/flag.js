@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 const Schema = mongoose.Schema;
+const validFlagTypes = require('../utils/flags').getValidFlagTypes();
 
 const flagSchema = new Schema({
   // This will mock the unique ID for a site
@@ -10,7 +11,20 @@ const flagSchema = new Schema({
   },
   type: {
     type: String,
-    required: true
+    required: true,
+    validate: {
+      /**
+       * Validate that the selected type is valid
+       */
+      validator: (val) => {
+        if (validFlagTypes.indexOf(val) !== -1) {
+          return true;
+        }
+
+        return false;
+      },
+      message: 'Type must be a valid option'
+    }
   },
   start_date: {
     type: Date
@@ -35,6 +49,16 @@ flagSchema.pre('validate', function (next) {
       next(Error('Start Date must be before End Date'));
     }
   }
+
+  next();
+});
+
+/**
+ * Mimic foreign key data for a site
+ * Generating random number between 1 and 10
+ */
+flagSchema.pre('save', function (next) {
+  this.site_id = Math.floor(Math.random() * 10) + 1;
 
   next();
 });

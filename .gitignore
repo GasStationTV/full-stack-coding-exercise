@@ -179,3 +179,4 @@ node_modules
 
 # compiled files
 dist
+public/dist

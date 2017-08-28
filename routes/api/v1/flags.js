@@ -9,25 +9,34 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   const responseData = {};
+  const currentDate = new Date();
 
-  Flag.find().exec((err, flags) => {
-    if (err) {
-      console.log('----------------------------------------');
-      console.log(err);
+  Flag
+    .find({
+      $or: [{
+        end_date: null
+      }, {
+        end_date: { $gt: currentDate }
+      }]
+    })
+    .exec((err, flags) => {
+      if (err) {
+        console.log('----------------------------------------');
+        console.log(err);
 
-      responseData.status = 500;
-      responseData.message = 'Error querying for flags';
+        responseData.status = 500;
+        responseData.message = 'Error querying for flags';
 
-      res.status(responseData.status);
-      res.json(responseData);
-    } else {
-      responseData.status = 200;
-      responseData.flags = flags;
+        res.status(responseData.status);
+        res.json(responseData);
+      } else {
+        responseData.status = 200;
+        responseData.flags = flags;
 
-      res.status(responseData.status);
-      res.json(responseData);
-    }
-  });
+        res.status(responseData.status);
+        res.json(responseData);
+      }
+    });
 });
 
 /**
@@ -39,7 +48,8 @@ router.post('/', (req, res) => {
 
   Flag.create({
     type: req.body.flag.type,
-    start_date: new Date()
+    start_date: req.body.flag.start_date,
+    end_date: req.body.flag.end_date
   }, (err) => {
     if (err) {
       console.log('----------------------------------------');
@@ -66,7 +76,7 @@ router.post('/', (req, res) => {
 router.put('/:flagId/', (req, res) => {
   const responseData = {};
 
-  Flag.findOneAndUpdate({ _id: req.params.flagId }, { type: req.body.flag.type }, {}, (err) => {
+  Flag.findOneAndUpdate({ _id: req.params.flagId }, { type: req.body.flag.type, start_date: req.body.flag.start_date, end_date: req.body.flag.end_date }, {}, (err) => {
     if (err) {
       console.log('----------------------------------------');
       console.log(err);
