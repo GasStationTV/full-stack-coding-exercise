@@ -1,6 +1,7 @@
 const defaultState = {
   isVisible: false,
-  flag: {}
+  flag: {},
+  errors: []
 };
 
 const reducer = (state = defaultState, action) => {
@@ -43,7 +44,17 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         isVisible: false,
-        flag: {}
+        flag: {},
+        errors: []
+      };
+    }
+    case 'FLAG_CREATE_ERROR': {
+      return {
+        ...state,
+        flag: {
+          ...state
+        },
+        errors: action.payload.errors.errors
       };
     }
     default: {

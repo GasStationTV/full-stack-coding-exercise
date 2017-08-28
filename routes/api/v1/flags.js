@@ -2,6 +2,7 @@ const express = require('express');
 const Flag = require('../../../models').Flag;
 
 const router = express.Router();
+const flagUtils = require('../../../utils/flags');
 
 /**
  * Get all valid flags
@@ -52,11 +53,12 @@ router.post('/', (req, res) => {
     end_date: req.body.flag.end_date
   }, (err) => {
     if (err) {
-      console.log('----------------------------------------');
-      console.log(err);
+      flagUtils.formatErrors(err);
 
       responseData.status = 500;
       responseData.message = 'Error creating flag';
+      responseData.err = err;
+      responseData.errors = flagUtils.formatErrors(err);
 
       res.status(responseData.status);
       res.json(responseData);

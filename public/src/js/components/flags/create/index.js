@@ -66,6 +66,23 @@ class FlagCreate extends React.Component {
     this.context.store.dispatch(createFlag(reducer.flag));
   }
 
+  /**
+   * Display validation errors from API
+   */
+  displayErrors() {
+    const { reducer } = this.props;
+
+    if (reducer.errors.length) {
+      return reducer.errors.map((error) => {
+        return (
+          <p className="text-danger text-capitalize" key={error}>{error}</p>
+        );
+      });
+    }
+
+    return null;
+  }
+
   displayForm() {
     const { reducer } = this.props;
     const typeOptions = [{
@@ -99,6 +116,7 @@ class FlagCreate extends React.Component {
         <Modal show={reducer.isVisible} onHide={() => { this.handleUpdateIsVisible(false); }} backdrop={'static'}>
           <Modal.Body>
             <h3>Create New Flag</h3>
+            {this.displayErrors()}
             <form onSubmit={this.handleFormSubmit}>
               <div className="form-group">
                 <label htmlFor="flagType">Type</label>

@@ -75,10 +75,12 @@ const createFlagDone = () => {
   };
 };
 
-const createFlagError = (payload) => {
+const createFlagError = (errors) => {
   return {
     type: 'FLAG_CREATE_ERROR',
-    payload
+    payload: {
+      errors
+    }
   };
 };
 
@@ -95,7 +97,7 @@ const createFlag = (flag) => {
       dispatch(getFlags());
     }).catch((error) => {
       dispatch(createFlagError({
-        error: error.response.data.message
+        errors: error.response.data.errors
       }));
     });
   };
