@@ -6,6 +6,13 @@ const app = express()
 const MongoClient = require('mongodb').MongoClient
 const MongoObjectId = require('mongodb').ObjectID
 
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 let db
 
 // Sensitive data like this should come from ENV variables in a real-world application.

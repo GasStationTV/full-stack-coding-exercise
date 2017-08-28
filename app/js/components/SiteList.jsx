@@ -1,27 +1,44 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export default class SiteList extends Component {
 
-	render() {
+export default (props) => {
 
-		const siteIds = [12, 23, 232, 501];
+	let { sites } = props
 
+	if(props.siteListLoadingError)
 		return (
-			<div>
-				Here is the site list.
+			<div>There was an error loading the Site List.</div>
+		)
 
-				<ul>
-				{
-					siteIds.map(id => (
-						<li key={id}>
-							<Link to={`/sites/${id}`}>Site ID {id}</Link>
-						</li>
-					))
-				}
-				</ul>
+	if(props.siteListIsLoading)
+		return (
+			<div>... please wait ...</div>
+		)
 
-			</div>
-		);
-	}
+	if(!sites.length)
+		return (
+			<div>There are no available sites at this time.</div>
+		)
+
+	return (
+		<div>
+
+			Site List
+
+			<ul>
+			{
+				sites.map(siteObj => (
+
+					<li key={siteObj._id}>
+						<Link to={`/sites/${siteObj._id}`}>{siteObj.name}</Link>
+					</li>
+				))
+			}
+			</ul>
+
+		</div>
+	)
+
 }
+

@@ -6,12 +6,11 @@ var webpack = require('webpack');
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: __dirname + '/app/index.html',
   filename: 'index.html',
-  inject: 'body'
+  inject: false
 })
 
 var PollyFillWebPackPlugin = new webpack.ProvidePlugin({
-  'Promise': 'es6-promise',
-  'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+  'Promise': 'es6-promise'
 })
 
 module.exports = {
