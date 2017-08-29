@@ -13,7 +13,7 @@ function clone(obj) {
             copy[attr]=clone(obj[attr]);
           }else{
             copy[attr] = obj[attr];
-          }          
+          }
         }
     }
     return copy;
@@ -51,12 +51,6 @@ export function sitesReducer(state, action){
 	}else if(action.type==CLOSE_MODAL){
     newState[action.siteKey]=clone(newState[action.siteKey]["historyState"]);
     newState[action.siteKey]["historyState"]=undefined;
-    // newState[action.siteKey]["openModalFlag"]=false;
-    // newState[action.siteKey]["mode"]=null;
-    // newState[action.siteKey]["editFlagIndex"]=-1;
-    // if (action.mode=="ADD"){
-    //   newState[action.siteKey].flags.splice(-1,1);
-    // }
 		return newState;
 	}else if(action.type==FORM_SAVE){
     newState[action.siteKey]["openModalFlag"]=false;

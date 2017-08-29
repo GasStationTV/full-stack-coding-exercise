@@ -14,12 +14,12 @@ if (!String.prototype.endsWith)
       return this.substr(Position - searchStr.length,
                          searchStr.length) === searchStr;
   };
-const routes = (
+const connectedApp = (
 	<Provider store={store}>
 		<App/>
 	</Provider>
 );
 
 document.addEventListener('DOMContentLoaded', ()=> {
-	ReactDOM.render(routes, document.getElementById('root'));
+	ReactDOM.render(connectedApp, document.getElementById('root'));
 });

@@ -21,6 +21,5 @@ test('App DOM validation', () => {
   		<App/>
   	</Provider>
   );
-  console.log("DEBUG SITES: "+appComponent.find(Sites).length)
   expect(appComponent.find(Sites).length).toBeDefined();
 });

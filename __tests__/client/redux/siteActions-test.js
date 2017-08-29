@@ -1,7 +1,7 @@
 import {toggleOpenFlag,openModal,cancelModal,handleChange,saveModal,removeAlertFunc,handleAlertDismiss,removeConfirm} from '../../../src/client/redux/siteActions'
 import {TOGGLE_OPEN_FLAG,OPEN_FLAG_MODAL,CLOSE_MODAL,FORM_CHANGE,FORM_SAVE,REMOVE_ALERT,CANCEL_REMOVE,CONFIRM_REMOVE} from '../../../src/client/redux/siteActions'
 
-describe('ACTIONS: toggleOpenFlag',()=>{
+describe('ACTIONS: SITE ACTIONS GENERATORS',()=>{
     it('Toggles show/hide for flags panel', () => {
         const payload = toggleOpenFlag(1)
         expect(payload).toEqual({type:TOGGLE_OPEN_FLAG,siteKey:1})

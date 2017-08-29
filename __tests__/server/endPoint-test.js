@@ -1,11 +1,59 @@
 const request = require('supertest');
-const app = require('../../src/server/server')
+import {setupApp} from '../../src/server/server';
+
 
 describe('Test site routes', () => {
-    test('It shoudl respond with avalable sites', () => {
-        return request(app).get("/api/site").then(response => {
-            console.log(response)
+    let agent=null;
+
+    beforeAll(() => setupApp().then(expressApp => {
+      agent = request.agent(expressApp);
+    }));
+    test('It shoudl respond with avalable sites', (done) => {
+        return agent.get("/api/site").set('Accept', 'application/json').then(response => {
             expect(response.statusCode).toBe(200)
+            done()
         })
     });
+    test('It should create new site', (done) => {
+        return agent.post("/api/site")
+          .type('form').send({name:"Test Site Name",address:"Test Site Address"}).
+          set('Accept', 'application/json').then(response => {
+            expect(response.statusCode).toBe(200)
+            done()
+        })
+    },10000);
+    test('It should create new flag', (done) => {
+        agent.post("/api/flag")
+          .type('form').send({startDate:"2017-08-01",endDate:"2017-08-30",flagType:"GSTV - Unsellable",siteKey:7}).
+          set('Accept', 'application/json').then(response => {
+            expect(typeof response).toBe('object')
+            expect(response.body.flagType).toEqual("GSTV - Unsellable")
+            expect(response.body.endDate).toEqual("2017-08-30")
+            expect(response.body.startDate).toEqual("2017-08-01")
+            done()
+          })
+
+    },10000);
+    test('It should update existing flag', (done) => {
+        agent.put("/api/flag/7/0")
+          .type('form').send({startDate:"2017-08-01",endDate:"2017-08-30",flagType:"GSTV - Research Survey"}).
+          set('Accept', 'application/json').then(response => {
+            expect(typeof response).toBe('object')
+            expect(response.body.flagType).toEqual("GSTV - Research Survey")
+            expect(response.body.endDate).toEqual("2017-08-30")
+            expect(response.body.startDate).toEqual("2017-08-01")
+            done()
+          })
+
+    },10000);
+    test('It should delete existing flag', (done) => {
+        agent.delete("/api/flag/7/0")
+          .type('form').
+          set('Accept', 'application/json').then(response => {
+            expect(typeof response).toBe('object')
+            expect(response.body.message).toEqual('Flag Deleted')
+            done()
+          })
+
+    },10000);
 })
