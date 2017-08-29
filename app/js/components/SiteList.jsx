@@ -6,12 +6,12 @@ export default (props) => {
 
 	let { sites } = props
 
-	if(props.siteListLoadingError)
+	if(props.sitesListLoadingError)
 		return (
 			<div>There was an error loading the Site List.</div>
 		)
 
-	if(props.siteListIsLoading)
+	if(props.sitesListIsLoading)
 		return (
 			<div>... please wait ...</div>
 		)

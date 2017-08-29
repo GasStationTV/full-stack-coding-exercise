@@ -15,16 +15,16 @@ export function confirmDeleteHide(siteId, flagIndex) {
 	}
 }
 
-export function viewSite(siteId) {
+export function selectSite(siteId) {
 	return {
-		type: actionTypes.VIEW_SITE,
+		type: actionTypes.SELECT_SITE,
 		payload: { siteId, show:true }
 	}
 }
 
-export function closeSite(siteId) {
+export function unselectSite(siteId) {
 	return {
-		type: actionTypes.VIEW_SITE,
+		type: actionTypes.SELECT_SITE,
 		payload: { siteId, show:false }
 	}
 }

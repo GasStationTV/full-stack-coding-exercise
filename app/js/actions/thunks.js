@@ -67,8 +67,6 @@ export function fetchSiteData(siteId) {
 		fetch(URL_SITES_LIST + "/" + siteId)
 			.then((response) => {
 
-				dispatch(siteDataIsLoading(siteId, false));
-
 				if (!response.ok)
 					throw new Error(`Error loading site data for ID ${siteId}: ${response.statusText}`)
 
@@ -126,8 +124,6 @@ export function saveSiteData(siteId, siteObj) {
 				}
 			})
 			.then((response) => {
-
-				dispatch(siteDataIsSaving(siteId, false))
 
 				if (!response.ok)
 					throw new Error(`Error loading site data for ID ${siteId}: ${response.statusText}`)

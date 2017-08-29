@@ -2,16 +2,17 @@ import { connect } from 'react-redux'
 import SiteList from '../components/SiteList'
 import React, { Component } from 'react';
 import { fetchSitesList } from '../actions/thunks'
+import { getSitesListIsLoading, getSitesListIsLoadingError, getSitesArr } from '../selectors'
 
 
 class SiteListContainer extends Component {
 
 	componentDidMount() {
 
-		let { dispatch, sites, siteListIsLoading } = this.props
+		const { dispatch, sites, sitesListIsLoading } = this.props
 
-		if(siteListIsLoading){
-			console.log("The Site List is already loading, skipping.");
+		if(sitesListIsLoading){
+			console.log("The Site List is already loading, no need to load it again.");
 			return;
 		}
 
@@ -21,14 +22,20 @@ class SiteListContainer extends Component {
 
 	render() {
 
-		return <SiteList {...this.props} />
+		const dumbChildProps = { 
+							"sitesListLoadingError":this.props.sitesListLoadingError, 
+							"sitesListIsLoading":this.props.sitesListIsLoading,
+							"sites":this.props.sites
+						}
+
+		return <SiteList { ...dumbChildProps } />
 	}
 }
 
 export default connect(state => (
 	{
-		sites: state.sites, 
-		siteListIsLoading: state.siteListIsLoading, 
-		siteListLoadingError: state.siteListLoadingError   
+		sites: getSitesArr(state), 
+		sitesListIsLoading: getSitesListIsLoading(state), 
+		sitesListLoadingError: getSitesListIsLoadingError(state)   
 	}
 	))(SiteListContainer)

@@ -1,4 +1,14 @@
 
+[x] Find out why Selector for getSelectedSiteIsLoaded is returning stale data from the state.
+[x] Solve error connecting to MongoDB. Just happened out of the blue: "Topology was destroyed"
+[x] Solve problem of Selected SiteID not updating from change to Router parameters.
+[] Add a validator module for checking the shape of arbitrary objects in the applicaiton.
+[] Currently the SitesList is going to re-render for every change to a child component. Consider making the SiteList just an array of SiteID,Name within a new selector to keep the component stable.
+[x] Find out with the SiteDetailsContainer is not re-rendering after a change to the State.
+[] Refactor codebase to get rid of inconsistent use of "siteList..." versus "sitesList".
+[x] Store the selected Site ID on the State after a Route change so that the Site Details can be memoized in various selectors.
+	[x] Move the info about the SiteList, such as error, inProgress, etc. into its own Key on the state and combine reducers. 
+[x] Refactor the dispatch calls for "isLoading(false)" on SiteDeails Load/Save.  The Reducers can infer when the action for the Response or Error is given.
 [] Find out why the ES7 "rest" operators is reporting a syntax error in the browser.  Chrome works with the same syntax natively.  Maybe it's an ESlint thing?
 [] Confirm that WebPack will strip out console.log() statements in production.
 [x] Solve Double-load problem on SiteListContainer component.
@@ -74,4 +84,4 @@
 	[] Figure out why .sublime_project is not allowing Tabbed spaces.
 
 [x] Setup local repo with a Fork and GitFlow
-[x] Go through Readme and clarify any ambiguity.
+[x] Go through Readme and clarify any ambiguity.  exercise 
