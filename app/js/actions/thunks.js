@@ -118,10 +118,10 @@ export function saveSiteData(siteId, siteObj) {
 		dispatch(siteDataIsSaving(siteId, true));
 
 		fetch(URL_SITES_LIST + "/" + siteId, { 
-				method: 'PUT',
-				data: {
+				method: 'POST',
+				body: JSON.stringify({
 					flags: siteObj.flags
-				}
+				})
 			})
 			.then((response) => {
 

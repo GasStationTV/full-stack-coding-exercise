@@ -9,7 +9,9 @@ import { getSelectedSiteId,
 		getSelectedSiteName, 
 		getSelectedSiteFlags, 
 		getSelectedSiteIsLoading, 
-		getSelectedSiteHasError, 
+		getSelectedSiteIsSaving, 
+		getSelectedSiteHasErrorLoading, 
+		getSelectedSiteHasErrorSaving, 
 		getSelectedSiteIsLoaded } from '../selectors'
 
 
@@ -54,7 +56,9 @@ class SiteDetailsContainer extends Component {
 							"isLoading":this.props.isLoading,
 							"siteFlags":this.props.siteFlags,
 							"isLoaded":this.props.isLoaded,
-							"hasErrorLoading":this.props.hasErrorLoading
+							"hasErrorLoading":this.props.hasErrorLoading,
+							"hasErrorSaving":this.props.hasErrorSaving,
+							"isSaving":this.props.isSaving
 						}
 
 		return <SiteDetails { ...dumbChildProps } />
@@ -67,7 +71,9 @@ SiteDetailsContainer.propTypes = {
 	siteId: PropTypes.string.isRequired,
 	siteName: PropTypes.string.isRequired,
 	isLoaded: PropTypes.bool.isRequired,
-	siteFlags: PropTypes.array.isRequired
+	siteFlags: PropTypes.array.isRequired,
+	hasErrorSaving: PropTypes.bool.isRequired,
+	isSaving: PropTypes.bool.isRequired
 }
 
 export default connect(state => ( 
@@ -76,6 +82,8 @@ export default connect(state => (
 		siteName: getSelectedSiteName(state),
 		siteFlags: getSelectedSiteFlags(state),
 		isLoading: getSelectedSiteIsLoading(state),
+		isSaving: getSelectedSiteIsSaving(state),
 		isLoaded: getSelectedSiteIsLoaded(state),
-		hasErrorLoading: getSelectedSiteHasError(state)
+		hasErrorLoading: getSelectedSiteHasErrorLoading(state),
+		hasErrorSaving: getSelectedSiteHasErrorSaving(state)
 	}))(SiteDetailsContainer)

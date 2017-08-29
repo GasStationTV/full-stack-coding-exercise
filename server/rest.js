@@ -5,12 +5,16 @@ const fs = require('fs')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
 const MongoObjectId = require('mongodb').ObjectID
+const bodyParser = require('body-parser')
 
+
+app.use(bodyParser.text());
 
 app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+	res.header("Access-Control-Allow-Origin", "*")
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,HEAD')
+	res.header("Access-Control-Allow-Headers", "X-Requested-With")
+	next();
 });
 
 let db
@@ -75,7 +79,7 @@ app.get('/sites/:id', function (req, res) {
 })
 
 // Updates the Site ID with the given Site document.
-app.put('/sites/:id', function (req, res) {
+app.post('/sites/:id', function (req, res) {
 
 	let siteId = MongoObjectId(req.params.id);
 	let siteDocument
@@ -84,7 +88,7 @@ app.put('/sites/:id', function (req, res) {
 		siteDocument = JSON.parse(req.body)
 	}
 	catch(e){
-		console.log(`Unable parse the JSON Site document for updating: ${siteId}`, err)
+		console.log(`Unable parse the JSON Site document for updating: ${siteId}`, e)
 		res.send({error: "Unable to parse JSON body."});
 		return;
 	}
@@ -96,7 +100,7 @@ app.put('/sites/:id', function (req, res) {
 	// This API shouldn't let callers modify the Site name or _id.
 	let flagsPropertyOnly = Object.assign({}, {"flags":siteDocument.flags}) 
 
-	db.collection('sites').updateOne({_id: siteId}, {$set:JSON.stringify(flagsPropertyOnly)}, {safe:true}, (err, result) => {
+	db.collection('sites').updateOne({_id: siteId}, {$set:flagsPropertyOnly}, {safe:true}, (err, result) => {
 
 		if (err) {
 			console.log(`Unable update the Site document for ID: ${siteId}`, err)
@@ -104,14 +108,14 @@ app.put('/sites/:id', function (req, res) {
 			return;
 		}
 
-		if(result !== 1){
+		if(!result.result || result.result.n !== 1){
 			console.log(`Unable update the Site document for ID: ${siteId}. Mongo returned with an invalid result: ${result}`)
 			res.status(404);
 			res.send({error: "The update operation failed. The ID is likely invalid."});
 			return;
 		}
 
-		res.send(result);
+		res.send("OK");
 	})
 })
 

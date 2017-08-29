@@ -3,7 +3,7 @@ import SiteList from '../components/SiteList'
 import React, { Component } from 'react';
 import { saveSiteData } from '../actions/thunks'
 import { addFlag, addFlagCancel } from '../actions/actionObjects'
-import { getShowAddFlagFormForSelectedSite, getSelectedSiteId } from '../selectors'
+import { getShowAddFlagFormForSelectedSite, getSelectedSiteId, getSelectedSiteObj } from '../selectors'
 import AddOrEditFlag from '../components/AddOrEditFlag'
 import PropTypes from 'prop-types'
 
@@ -19,9 +19,18 @@ class AddFlagContainer extends Component {
 		this.handleShowAddForm = this.handleShowAddForm.bind(this);
 	}
 
-	// The AddOrEditFlag should call this method with the Flag Object (to be inserted within the flags array) after it passes validation.
+	// The AddOrEditFlag dummy component should call this method with the Flag Object (to be inserted within the SiteObject's flags array) after it passes validation.
 	handleSaveFlag(flagObj) {
 
+		var existingFlagsArr = this.props.siteObj.flags.concat();
+
+		existingFlagsArr.push(flagObj);
+
+		var updatedSiteObj = Object.assign({}, this.props.siteObj, { flags: existingFlagsArr })
+
+		// Get the existing Site Object and add just push the new Flag object onto its array.
+		// The REST call must update the entire SiteObj and everything in it.
+		this.props.dispatch(saveSiteData(this.props.siteId, updatedSiteObj))
 	}
 
 	handleCloseAddForm() {
@@ -37,10 +46,10 @@ class AddFlagContainer extends Component {
 	}
 
 	render() {
-		
+
 		if(this.props.showAddFlagForm){
 
-			// Re-use the same component for Editing and Adding a Flag.
+			// Re-use the same component for Editing too.
 			return (<AddOrEditFlag 
 						isAddForm={true} 
 						onSaveFlag={this.handleSaveFlag} 
@@ -64,6 +73,7 @@ AddFlagContainer.propTypes = {
 export default connect(state => (
 	{
 		siteId: getSelectedSiteId(state), 
+		siteObj: getSelectedSiteObj(state), 
 		showAddFlagForm: getShowAddFlagFormForSelectedSite(state)
 	}
 	))(AddFlagContainer)

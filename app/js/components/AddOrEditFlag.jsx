@@ -27,27 +27,72 @@ export default class AddOrEditFlag extends Component {
 	// The AddOrEditFlag should call this method with the Flag Object (to be inserted within the flags array) after it passes validation.
 	handleFormSubmit(event) {
 
-		this.setState({errorMessage: ""});
+		this.setState({errorMessage: ""})
 
-		alert("submit form." + JSON.stringify(this.state));
+		let newErrorMessage = ""
+		let newStartTimestampUnix = 0;
+		let newEndTimestampUnix = 0;
 
-		this.setState({errorMessage: "New Error"});
+		if(!this.state.flagType)
+			newErrorMessage = "You must select a Flag Type before submitting the form."
+
+		if(this.state.startDate){
+
+			var possibleStartTimestamp = Date.parse(this.state.startDate)
+
+			if(Number.isNaN(possibleStartTimestamp))
+				newErrorMessage = "The start date is invalid."
+			else
+				newStartTimestampUnix = possibleStartTimestamp
+		}
+		if(this.state.endDate){
+
+			var possibleEndTimestamp = Date.parse(this.state.endDate)
+
+			if(Number.isNaN(possibleEndTimestamp))
+				newErrorMessage = "The end date is invalid."
+			else
+				newEndTimestampUnix = possibleEndTimestamp
+		}
+
+		if(newStartTimestampUnix && newEndTimestampUnix){
+
+			if(new Date(newStartTimestampUnix).toLocaleDateString() === new Date(newEndTimestampUnix).toLocaleDateString())
+				newErrorMessage = "The start date may not be the same date as the end date."
+
+			if(newStartTimestampUnix > newEndTimestampUnix)
+				newErrorMessage = "The start date must be before the end date."
+		}
+
+		if(!newStartTimestampUnix && !newEndTimestampUnix)
+			newErrorMessage = "Either the start date or the end date must be provided."
+
+		if(newErrorMessage)
+			this.setState({errorMessage: newErrorMessage})
+		else
+			this.props.onSaveFlag({
+				flagType: this.state.flagType,
+				startDate: this.state.startDate,
+				endDate: this.state.endDate
+			})
+
+		event.preventDefault()
 	}
 
 	handleCancel(event) {
-		this.props.onClose();
+		this.props.onClose()
 	}
 
 	handleFlagTypeChange(event) {
-		this.setState({flagType: event.target.value});
+		this.setState({flagType: event.target.value})
 	}
 
 	handleStartDateChange(event) {
-		this.setState({startDate: event.target.value});
+		this.setState({startDate: event.target.value})
 	}
 
 	handleEndDateChange(event) {
-		this.setState({endDate: event.target.value});
+		this.setState({endDate: event.target.value})
 	}
 
 	componentDidMount() {
@@ -57,7 +102,7 @@ export default class AddOrEditFlag extends Component {
 	render() {
 
 		let listMenuOptions = possibleFlagValues.map((flagType, index) => 
-				<option key={index} value="{flagType}">{flagType}</option>
+				<option key={index} value={flagType}>{flagType}</option>
 			)
 
 		if(this.props.isAddForm)
@@ -68,7 +113,7 @@ export default class AddOrEditFlag extends Component {
 		let errorMessageBlock = "";
 
 		if(this.state.errorMessage)
-			errorMessageBlock = <div>{this.state.errorMessage}</div>
+			errorMessageBlock = <div style={{color:"red"}}>{this.state.errorMessage}</div>
 
 
 		return (

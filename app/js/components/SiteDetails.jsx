@@ -25,6 +25,8 @@ function SiteDetails (props) {
 	var headerTag = <h2>Site ID #{props.siteId}, Site Name: {props.siteName}</h2>
 	var closeLink = <div><Link to='/'>Close</Link></div>
 	var addFlagButton = <div><AddFlagContainer /></div>
+	var isSavingTag = <div>... saving ...</div>
+	var hasSavingErrorTag = <div>There was an error saving.</div>
 	var flagsList = "Flags"
 
 	// var flagsList = this.props.siteFlags.map((flagObj, flagIndex) => 
@@ -38,6 +40,8 @@ function SiteDetails (props) {
 				{headerTag}
 				{closeLink}
 				{addFlagButton}
+				{ props.isSaving && isSavingTag }
+				{ props.hasErrorSaving && hasSavingErrorTag }
 				<div>There are no site flags</div>
 			</div>
 		)
@@ -49,6 +53,8 @@ function SiteDetails (props) {
 				{headerTag}
 				{closeLink}
 				{addFlagButton}
+				{ props.isSaving && isSavingTag }
+				{ props.hasErrorSaving && hasSavingErrorTag }
 				<div>Total Flags {props.siteFlags.length}</div>
 				<div>{flagsList}</div>
 			</div>
@@ -62,7 +68,9 @@ SiteDetails.propTypes = {
 	siteId: PropTypes.string.isRequired,
 	siteName: PropTypes.string.isRequired,
 	isLoaded: PropTypes.bool.isRequired,
-	siteFlags: PropTypes.array.isRequired
+	siteFlags: PropTypes.array.isRequired,
+	hasErrorSaving: PropTypes.bool.isRequired,
+	isSaving: PropTypes.bool.isRequired
 }
 
 export default SiteDetails

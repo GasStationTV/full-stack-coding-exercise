@@ -68,7 +68,7 @@ export const getSelectedSiteIsLoaded = createSelector(
 	}
 )
 
-export const getSelectedSiteHasError = createSelector(
+export const getSelectedSiteHasErrorLoading = createSelector(
 	getSelectedSiteObj,
 	selectedSiteIdObj => {
 
@@ -76,6 +76,28 @@ export const getSelectedSiteHasError = createSelector(
 			return false
 
 		return selectedSiteIdObj.hasErrorLoading ? true : false
+	}
+)
+
+export const getSelectedSiteHasErrorSaving = createSelector(
+	getSelectedSiteObj,
+	selectedSiteIdObj => {
+
+		if(!selectedSiteIdObj)
+			return false
+
+		return selectedSiteIdObj.hasErrorSaving ? true : false
+	}
+)
+
+export const getSelectedSiteIsSaving = createSelector(
+	getSelectedSiteObj,
+	selectedSiteIdObj => {
+
+		if(!selectedSiteIdObj)
+			return false
+
+		return selectedSiteIdObj.isSaving ? true : false
 	}
 )
 

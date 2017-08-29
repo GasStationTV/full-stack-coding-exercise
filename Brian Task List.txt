@@ -1,9 +1,20 @@
+[] Sort the results from the SiteList rest call. Mongo is putting the most recently saved document to the bottom.
+[] When selecting a Site, make sure to clear out any "hasErrorSaving" flag. Otherwise an error message could be hanging around from the last attempt
+[x] Solve MongoDB error when trying to update the Site Object: 'Modifiers operate on fields but we found type string instead. For example: {$mod: {<field>: ...}} not {$set: "{"flags":[{"flagType":"Retailer - Location Priority","startDate":"8/25/18","endDate":""}]}"}',
+[x] Wire up the REST call for creating a new Flag from within the AddFlagContainer component.
+	[] Solve error on REST service: Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+		[x] Just change the PUT route to a POST for now.
+	[x] Find out why JSON body is not showing up on the server through req.body.
+		[x] Install the Body Parser middle-ware for Express.
+		[x] Find out why FETCH is doing a pre-flight request (i.e. OPTIONS whenever ApplicationType JSON is put in the headers)
+		[x] Figure out a way to use BodyParser with "text/plain" or write a custom middleware to chunk the req.body.
+[x] Add form validation to the AddOrEditFlag dumb component.
 [] Clean up all of the state properties on the individual Sites array when the SiteDetailList is closed within the Reducer (likely by brute force).  For example, if the Add Flag form is open on a view, then it appears open when re-visiting the same site details page.
 [x] Fix weird warning that happens when canceling the AddFlag Form: Form submission canceled because the form is not connected
 [] Find out why HotReloading doesn't work within a Route (on the Site Details page).
 [x] Solve error from AddFlagContainerComponent:  React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) 
 [x] Solve infinite loop that started happening after clicking into a SiteDetails with an AddEditRow component.
-[] Abstract the Form for Add/Edit flag so that it can be re-used for both types (like a New/Edit registration page).
+[x] Abstract the Form for Add/Edit flag so that it can be re-used for both types (like a New/Edit registration page).
 [x] Ensure that all Components have PropTypes configured.
 [] Design process for processing the Flag objects in an array on the Site Details page.
 	[] Create <FlagRowContainer> objects which accept a SiteID and a FlagIndex as a prop. That way there's no need to pass forward/back callbacks and pollute the SiteDetailsContainer.
@@ -34,7 +45,7 @@
 		[x] How to deal with Errors on PUT "SiteData" which has a SiteID associated with the Payload.
 	[x] Create Thunk Aysnc Actions for GetSiteList, GetSiteData(SiteID), SaveSiteData(siteId)
 [x] Decide on a process for loading data from the server and saving mutations.
-[] Design shape of reducers
+[x] Design shape of reducers
 [] Find a way to keep the "key" entries unique on <flag> components within Site Details view.
 [] Figure out how to use Nomalizr with "flag" entries.  They don't have unique ID's on their own.
 [] Create REST API
@@ -87,7 +98,7 @@
 		[] Verify that Pollyfill worked, even if WebPack compiled OK.
 	[x] Install "prop-types"
 
-[] Research CSS Solution.  CSS Modules ... Styled Components???
+[x] Research CSS Solution.  CSS Modules ... Styled Components???
 [x] Get JSX / Babel Package for SublimeText
 [] Figure out why Sublime Text is not honoring the .editorconfig IDE settings.
 	[] Figure out why .sublime_project is not allowing Tabbed spaces.

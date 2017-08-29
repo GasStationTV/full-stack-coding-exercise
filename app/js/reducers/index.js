@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import * as actionTypes from '../actions/actionTypes'
+import cloneDeep from 'lodash.clonedeep'
 
 export default combineReducers({
   sitesArr,
@@ -12,10 +13,46 @@ function sitesArr (state = [], action) {
 
 		switch (action.type) {
 
+			case actionTypes.SITE_DATA_SAVE_SENDING: {
+
+				const siteArrCopy = state.concat();
+				const siteIdFromPayload = action.payload.siteId
+				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
+
+				if(typeof action.payload.isSaving !== "boolean")
+					throw new Error("Error in reducer for SITE_DATA_SAVE_SENDING. action.payload.isSaving should be Boolean")
+
+				siteObj.isSaving = action.payload.isSaving
+
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
+
+				return siteArrCopy
+			}
+
+			case actionTypes.SITE_DATA_SAVE_RESPONSE: {
+
+				const siteArrCopy = state.concat()
+				const siteIdFromPayload = action.payload.siteId
+				const indexOfSiteInArr = getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)
+
+				siteArrCopy[indexOfSiteInArr] = getSiteObjById(siteIdFromPayload, siteArrCopy)
+
+				siteArrCopy[indexOfSiteInArr].isSaving = false
+
+				// If there's no error then close the form(s), otherwise leave them open so that the user can try again.
+				if(action.error)
+					siteArrCopy[indexOfSiteInArr].hasErrorSaving = true
+				else
+					siteArrCopy[indexOfSiteInArr].showAddFlagForm = false
+
+				return siteArrCopy
+			}
+
 			case actionTypes.UNSELECT_ACTIVE_SITE: {
 
 				// Ran into a little problem here because it's not possible to quickly get the ID of the "selected Site" because of the ways that the reducers were separated.
-				// It wouldn't be efficient in production, but one solution is to loop through all of the array elements an reset any Open/Edit flags.  
+				// It wouldn't be efficient in production, but one solution is to loop through all of the array elements an reset any Open/Edit flags.
+				// The solution is either to normalize the data or add a Root Reducer.
 				return state;
 			}
 
@@ -35,69 +72,69 @@ function sitesArr (state = [], action) {
 
 			case actionTypes.ADD_FLAG: {
 
-				const siteArrCopy = state.concat();
+				const siteArrCopy = state.concat()
 				const siteIdFromPayload = action.payload.siteId
 				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
 
 				if(typeof action.payload.show !== "boolean")
-					throw new Error("Error in reducer for ADD_FLAG. action.payload.show should be Boolean");
+					throw new Error("Error in reducer for ADD_FLAG. action.payload.show should be Boolean")
 
-				siteObj.showAddFlagForm = action.payload.show;
+				siteObj.showAddFlagForm = action.payload.show
 
-				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj;
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
 
-				return siteArrCopy;
+				return siteArrCopy
 			}
 
 			case actionTypes.SITE_DATA_LOADING: {
 
-				const siteArrCopy = state.concat();
+				const siteArrCopy = state.concat()
 				const siteIdFromPayload = action.payload.siteId
 				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
 
 				if(typeof action.payload.isLoading !== "boolean")
-					throw new Error("Error in reducer for SITE_DATA_LOADING. action.payload.isLoading should be Boolean");
+					throw new Error("Error in reducer for SITE_DATA_LOADING. action.payload.isLoading should be Boolean")
 
-				siteObj.isLoading = action.payload.isLoading;
+				siteObj.isLoading = action.payload.isLoading
 
-				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj;
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
 
-				return siteArrCopy;
+				return siteArrCopy
 			}
 
 			case actionTypes.SITE_DATA_RESPONSE: {
 
-				const siteArrCopy = state.concat();
+				const siteArrCopy = state.concat()
 				const siteIdFromPayload = action.payload.siteId
-				const indexOfSiteInArr = getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy);
+				const indexOfSiteInArr = getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)
 
 				// If there's an error just use the existing record from the current state and set some flags on it.
 				if(action.error){
 
-					const existingSiteObjCopy = getSiteObjById(siteIdFromPayload, siteArrCopy);
+					const existingSiteObjCopy = getSiteObjById(siteIdFromPayload, siteArrCopy)
 
-					existingSiteObjCopy.isLoading = false;
-					existingSiteObjCopy.isLoaded = false;
-					existingSiteObjCopy.hasErrorLoading = true;
+					existingSiteObjCopy.isLoading = false
+					existingSiteObjCopy.isLoaded = false
+					existingSiteObjCopy.hasErrorLoading = true
 
-					siteArrCopy[indexOfSiteInArr] = existingSiteObjCopy;
+					siteArrCopy[indexOfSiteInArr] = existingSiteObjCopy
 
-					return siteArrCopy;
+					return siteArrCopy
 				}
 
 				// Otherwise replace the existing Site object on the state array with the object returned from the REST call.
 				const siteObjFromPayload = action.payload.siteObj
 
 				if(siteIdFromPayload !== siteObjFromPayload._id)
-					throw new Error("Error in SITE_DATA_RESPONSE reducer. The Payload Site ID does not match the _id key within the REST response.");
+					throw new Error("Error in SITE_DATA_RESPONSE reducer. The Payload Site ID does not match the _id key within the REST response.")
 
-				siteObjFromPayload.isLoading = false;
-				siteObjFromPayload.isLoaded = true;
-				siteObjFromPayload.hasErrorLoading = false;
+				siteObjFromPayload.isLoading = false
+				siteObjFromPayload.isLoaded = true
+				siteObjFromPayload.hasErrorLoading = false
 
-				siteArrCopy[indexOfSiteInArr] = siteObjFromPayload;
+				siteArrCopy[indexOfSiteInArr] = siteObjFromPayload
 
-				return siteArrCopy;
+				return siteArrCopy
 			}
 			default:
 				return state
@@ -119,7 +156,7 @@ function sitesListDetails (
 			case actionTypes.SITES_LIST_LOADING:
 
 				if(typeof action.payload !== "boolean")
-					throw new Error("Error in reducer for SITES_LIST_LOADING. action.payload should be Boolean");
+					throw new Error("Error in reducer for SITES_LIST_LOADING. action.payload should be Boolean")
 
 				return Object.assign({}, state, {sitesListIsLoading: action.payload })
 
@@ -153,15 +190,15 @@ const getSiteIndexWithinStateArrayById = (siteId, sitesArr) => {
 	const foundIndex = sitesArr.findIndex(siteObj => siteObj._id === siteId)
 
 	if(foundIndex === -1)
-		throw new Error("Error in Reducer function getSiteIndexWithinStateArrayById. The given Site ID couldn't be found within the Site Array:" + siteId);
+		throw new Error("Error in Reducer function getSiteIndexWithinStateArrayById. The given Site ID couldn't be found within the Site Array:" + siteId)
 
-	return foundIndex;
+	return foundIndex
 }
 
 const getSiteObjById = (siteId, sitesArr) => {
 
-	const indexOfSite = getSiteIndexWithinStateArrayById(siteId, sitesArr);
+	const indexOfSite = getSiteIndexWithinStateArrayById(siteId, sitesArr)
 
-	return Object.assign({}, sitesArr[indexOfSite]);
+	return cloneDeep(sitesArr[indexOfSite])
 }
 
