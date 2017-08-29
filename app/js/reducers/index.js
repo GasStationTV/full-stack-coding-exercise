@@ -2,53 +2,22 @@ import { combineReducers } from 'redux'
 import * as actionTypes from '../actions/actionTypes'
 
 export default combineReducers({
-  sitesListDetails,
-  sitesArr
+  sitesArr,
+  sitesListDetails
 })
-
-// This reducer is just concerned about details of the list of Sites. 
-// For example, if the list is loading from the server, or which one of the ID's is currently selected.
-function sitesListDetails (
-	state = { 
-				sitesListIsLoading:false, 
-				sitesListLoadingError:false, 
-				selectedSiteId:0
-			}, 
-	action) {
-
-		switch (action.type) {
-
-			case actionTypes.SITES_LIST_LOADING:
-
-				if(typeof action.payload !== "boolean")
-					throw new Error("Error in reducer for SITES_LIST_LOADING. action.payload should be Boolean");
-
-				return Object.assign({}, state, {sitesListIsLoading: action.payload })
-
-			case actionTypes.SELECT_SITE:
-
-				if(action.payload.show)
-					return Object.assign({}, state, {selectedSiteId: action.payload.siteId })
-				else
-					return Object.assign({}, state, {selectedSiteId: 0 })
-
-			case actionTypes.SITES_LIST_RESPONSE:
-
-				if(action.error)
-					return Object.assign({}, state, {sitesListLoadingError: true, sitesListIsLoading: false })
-				else
-					return Object.assign({}, state, {sitesListLoadingError: false, sitesListIsLoading: false })
-
-			default:
-				return state
-		}
-}
 
 
 // This reducer handles communication for individual Sites and will take care of merging any Site-specific data into the array.
 function sitesArr (state = [], action) {
 
 		switch (action.type) {
+
+			case actionTypes.UNSELECT_ACTIVE_SITE: {
+
+				// Ran into a little problem here because it's not possible to quickly get the ID of the "selected Site" because of the ways that the reducers were separated.
+				// It wouldn't be efficient in production, but one solution is to loop through all of the array elements an reset any Open/Edit flags.  
+				return state;
+			}
 
 			case actionTypes.SITES_LIST_RESPONSE: {
 
@@ -64,6 +33,22 @@ function sitesArr (state = [], action) {
 				}
 			}
 
+			case actionTypes.ADD_FLAG: {
+
+				const siteArrCopy = state.concat();
+				const siteIdFromPayload = action.payload.siteId
+				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
+
+				if(typeof action.payload.show !== "boolean")
+					throw new Error("Error in reducer for ADD_FLAG. action.payload.show should be Boolean");
+
+				siteObj.showAddFlagForm = action.payload.show;
+
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj;
+
+				return siteArrCopy;
+			}
+
 			case actionTypes.SITE_DATA_LOADING: {
 
 				const siteArrCopy = state.concat();
@@ -74,9 +59,6 @@ function sitesArr (state = [], action) {
 					throw new Error("Error in reducer for SITE_DATA_LOADING. action.payload.isLoading should be Boolean");
 
 				siteObj.isLoading = action.payload.isLoading;
-
-				if(!siteObj.isLoading)
-					siteObj.isLoaded = false;
 
 				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj;
 
@@ -121,6 +103,49 @@ function sitesArr (state = [], action) {
 				return state
 		}
 }
+
+// This reducer is just concerned about details of the list of Sites. 
+// For example, if the list is loading from the server, or which one of the ID's is currently selected.
+function sitesListDetails (
+	state = { 
+				sitesListIsLoading:false, 
+				sitesListLoadingError:false, 
+				selectedSiteId:""
+			}, 
+	action) {
+
+		switch (action.type) {
+
+			case actionTypes.SITES_LIST_LOADING:
+
+				if(typeof action.payload !== "boolean")
+					throw new Error("Error in reducer for SITES_LIST_LOADING. action.payload should be Boolean");
+
+				return Object.assign({}, state, {sitesListIsLoading: action.payload })
+
+			case actionTypes.SELECT_SITE:
+
+				if(action.payload.show)
+					return Object.assign({}, state, {selectedSiteId: action.payload.siteId })
+				else
+					return Object.assign({}, state, {selectedSiteId: "" })
+
+			case actionTypes.UNSELECT_ACTIVE_SITE:
+
+				return Object.assign({}, state, {selectedSiteId: "" })
+
+			case actionTypes.SITES_LIST_RESPONSE:
+
+				if(action.error)
+					return Object.assign({}, state, {sitesListLoadingError: true, sitesListIsLoading: false })
+				else
+					return Object.assign({}, state, {sitesListLoadingError: false, sitesListIsLoading: false })
+
+			default:
+				return state
+		}
+}
+
 
 
 const getSiteIndexWithinStateArrayById = (siteId, sitesArr) => {

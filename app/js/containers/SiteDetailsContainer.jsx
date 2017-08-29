@@ -3,7 +3,14 @@ import SiteDetails from '../components/SiteDetails'
 import React, { Component } from 'react';
 import { fetchSiteData } from '../actions/thunks'
 import { selectSite } from '../actions/actionObjects'
-import { getSelectedSiteId, getSelectedSiteName, getSelectedSiteFlags, getSelectedSiteIsLoading, getSelectedSiteHasError, getSelectedSiteIsLoaded } from '../selectors'
+import PropTypes from 'prop-types'
+
+import { getSelectedSiteId, 
+		getSelectedSiteName, 
+		getSelectedSiteFlags, 
+		getSelectedSiteIsLoading, 
+		getSelectedSiteHasError, 
+		getSelectedSiteIsLoaded } from '../selectors'
 
 
 class SiteDetailsContainer extends Component {
@@ -52,6 +59,15 @@ class SiteDetailsContainer extends Component {
 
 		return <SiteDetails { ...dumbChildProps } />
 	}
+}
+
+SiteDetailsContainer.propTypes = {
+	hasErrorLoading: PropTypes.bool.isRequired,
+	isLoading: PropTypes.bool.isRequired,
+	siteId: PropTypes.string.isRequired,
+	siteName: PropTypes.string.isRequired,
+	isLoaded: PropTypes.bool.isRequired,
+	siteFlags: PropTypes.array.isRequired
 }
 
 export default connect(state => ( 

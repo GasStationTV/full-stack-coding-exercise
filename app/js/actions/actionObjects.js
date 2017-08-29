@@ -22,10 +22,10 @@ export function selectSite(siteId) {
 	}
 }
 
-export function unselectSite(siteId) {
+export function unselectActiveSite() {
 	return {
-		type: actionTypes.SELECT_SITE,
-		payload: { siteId, show:false }
+		type: actionTypes.UNSELECT_ACTIVE_SITE,
+		payload: { }
 	}
 }
 

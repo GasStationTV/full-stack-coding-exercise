@@ -2,7 +2,9 @@ import { connect } from 'react-redux'
 import SiteList from '../components/SiteList'
 import React, { Component } from 'react';
 import { fetchSitesList } from '../actions/thunks'
+import { unselectActiveSite } from '../actions/actionObjects'
 import { getSitesListIsLoading, getSitesListIsLoadingError, getSitesArr } from '../selectors'
+import PropTypes from 'prop-types'
 
 
 class SiteListContainer extends Component {
@@ -10,6 +12,8 @@ class SiteListContainer extends Component {
 	componentDidMount() {
 
 		const { dispatch, sites, sitesListIsLoading } = this.props
+
+		dispatch(unselectActiveSite());
 
 		if(sitesListIsLoading){
 			console.log("The Site List is already loading, no need to load it again.");
@@ -30,6 +34,13 @@ class SiteListContainer extends Component {
 
 		return <SiteList { ...dumbChildProps } />
 	}
+}
+
+// The shape of the array will be validated within SiteList, the props are simply forwarded.
+SiteListContainer.propTypes = {
+	sites: PropTypes.array.isRequired,
+	sitesListIsLoading: PropTypes.bool.isRequired,
+	sitesListLoadingError: PropTypes.bool.isRequired
 }
 
 export default connect(state => (

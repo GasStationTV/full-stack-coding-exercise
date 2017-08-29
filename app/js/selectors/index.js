@@ -100,3 +100,14 @@ export const getSelectedSiteName = createSelector(
 		return selectedSiteIdObj.name
 	}
 )
+
+export const getShowAddFlagFormForSelectedSite = createSelector(
+	getSelectedSiteObj,
+	selectedSiteIdObj => {
+
+		if(!selectedSiteIdObj)
+			return false
+
+		return selectedSiteIdObj.showAddFlagForm ? true : false
+	}
+)

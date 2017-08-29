@@ -1,8 +1,17 @@
-
+[] Clean up all of the state properties on the individual Sites array when the SiteDetailList is closed within the Reducer (likely by brute force).  For example, if the Add Flag form is open on a view, then it appears open when re-visiting the same site details page.
+[x] Fix weird warning that happens when canceling the AddFlag Form: Form submission canceled because the form is not connected
+[] Find out why HotReloading doesn't work within a Route (on the Site Details page).
+[x] Solve error from AddFlagContainerComponent:  React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) 
+[x] Solve infinite loop that started happening after clicking into a SiteDetails with an AddEditRow component.
+[] Abstract the Form for Add/Edit flag so that it can be re-used for both types (like a New/Edit registration page).
+[x] Ensure that all Components have PropTypes configured.
+[] Design process for processing the Flag objects in an array on the Site Details page.
+	[] Create <FlagRowContainer> objects which accept a SiteID and a FlagIndex as a prop. That way there's no need to pass forward/back callbacks and pollute the SiteDetailsContainer.
+[x] Come up with a way to un-select the current site by routing <Link>ing back to the main page.
+[] Refactor the Reducer for SELECT_SITE.  It doesn't need to send a flag in the payload now because another action will be used for un-selecting.
 [x] Find out why Selector for getSelectedSiteIsLoaded is returning stale data from the state.
 [x] Solve error connecting to MongoDB. Just happened out of the blue: "Topology was destroyed"
 [x] Solve problem of Selected SiteID not updating from change to Router parameters.
-[] Add a validator module for checking the shape of arbitrary objects in the applicaiton.
 [] Currently the SitesList is going to re-render for every change to a child component. Consider making the SiteList just an array of SiteID,Name within a new selector to keep the component stable.
 [x] Find out with the SiteDetailsContainer is not re-rendering after a change to the State.
 [] Refactor codebase to get rid of inconsistent use of "siteList..." versus "sitesList".
@@ -19,7 +28,7 @@
 [x] Fix error that started showing up: Module not found: Error: Can't resolve 'whatwg-fetch' in ...
 	[x] I had to take out the Pollyfill I created for "fetch" in the WebPack config.  Maybe I need to import another library like Axios or manually pollyfill?
 [x] Create a Container component for the SiteList that will take care of loading the data from the API if the state is empty.
-[] Setup Decorators to validate function inputs, like TypeScript or PropTypes.
+[] Setup Decorators to validate function inputs, like TypeScript.
 [x] Stub out actions with basic Thunk workflow.
 	[x] Decide on convention for Action types.  SFA
 		[x] How to deal with Errors on PUT "SiteData" which has a SiteID associated with the Payload.

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 
-export default (props) => {
+function SiteList (props) {
 
 	let { sites } = props
 
@@ -24,7 +25,7 @@ export default (props) => {
 	return (
 		<div>
 
-			Site List
+			<div>Site List</div>
 
 			<ul>
 			{
@@ -39,6 +40,24 @@ export default (props) => {
 
 		</div>
 	)
-
 }
 
+SiteList.propTypes = {
+
+	sitesListLoadingError: PropTypes.bool.isRequired,
+	sitesListIsLoading: PropTypes.bool.isRequired,
+	sites: PropTypes.array.isRequired,
+
+	sites: PropTypes.arrayOf(function(propValue, key) {
+
+		var validateMsgPrefix = "The SiteList component expects an array for the prop name 'sites'. Each element is an object. The element on key: " + key + " is expects an "
+
+		if(!propValue[key]._id || typeof propValue[key]._id !== "string")
+			return new Error(validateMsgPrefix + " '_id' property of type string.");
+
+		if(!propValue[key].name || typeof propValue[key].name !== "string")
+			return new Error(validateMsgPrefix + " 'name' property of type string.");
+	})
+}
+
+export default SiteList;
