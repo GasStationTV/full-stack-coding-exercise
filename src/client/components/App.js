@@ -4,7 +4,7 @@ import Sites from './Sites'
 import Navigation from './Navigation'
 import {toggleOpenFlag,openModal,cancelModal,handleChange,saveModal,
   removeAlertFunc,handleAlertDismiss,removeConfirm,loadSitesFromAPI,addFlagAPI
-  ,editFlagAPI,removeFlagAPI} from '../redux/siteActions'
+  ,editFlagAPI,removeFlagAPI,flagSaveError} from '../redux/siteActions'
 import { Row,Alert} from 'react-bootstrap';
 
 class App extends Component{
@@ -36,10 +36,27 @@ class App extends Component{
     this.props.dispatch(cancelModal(siteKey,mode));
   }
   saveModal(siteKey,mode){
-    if(mode=='ADD'){
-      this.props.dispatch(addFlagAPI(siteKey,this.props.sitesList));
+    const candidateFlag=this.props.sitesList[siteKey].flags[this.props.sitesList[siteKey].editFlagIndex]
+    let validationError=''
+    if(candidateFlag.startDate.length!=0 && candidateFlag.endDate.length!=0){
+      if(new Date(candidateFlag.startDate)>=new Date(candidateFlag.endDate)){
+        validationError=validationError+' End Date must be after Start Date.'
+      }
+    }
+    if(new Date()>=new Date(candidateFlag.endDate)){
+      validationError=validationError+' End Date must be today or in future'
+    }
+    if(candidateFlag.flagType.length==0){
+      validationError=validationError+' Flag Type is required'
+    }
+    if (validationError!=''){
+      this.props.dispatch(flagSaveError(siteKey,validationError));
     }else{
-      this.props.dispatch(editFlagAPI(siteKey,this.props.sitesList));
+      if(mode=='ADD'){
+        this.props.dispatch(addFlagAPI(siteKey,this.props.sitesList));
+      }else{
+        this.props.dispatch(editFlagAPI(siteKey,this.props.sitesList));
+      }
     }
   }
   handleChange(event,siteKey){

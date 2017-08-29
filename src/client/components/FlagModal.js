@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal,Button,Form,FormGroup,ControlLabel,FormControl} from 'react-bootstrap';
+import {Modal,Button,Form,FormGroup,ControlLabel,FormControl,Alert} from 'react-bootstrap';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import PropTypes from 'prop-types';
@@ -17,7 +17,11 @@ const FlagModal = ({openFlag,cancelFunc,saveFunc,container,addOrEditFlag,
             <Modal.Title id="contained-modal-title">{addOrEditFlag=="ADD"?<span>Add Flag</span>:<span>Edit Flag</span>}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
+          {site.flags[site.editFlagIndex].error?
+              <Alert bsStyle="danger">
+                <h4>Error: {site.flags[site.editFlagIndex].error}</h4>
+              </Alert>:null
+          }
           <Form>
               <FormGroup controlId="formStartDate">
                 <ControlLabel>Start Date</ControlLabel>
@@ -60,7 +64,7 @@ FlagModal.propTypes = {
   cancelFunc:PropTypes.func,
   saveFunc:PropTypes.func,
   container:PropTypes.node,
-  addOrEditFlag:PropTypes.bool,
+  addOrEditFlag:PropTypes.string,
   siteKey:PropTypes.string,
   site:PropTypes.object,
   handleChange:PropTypes.func,

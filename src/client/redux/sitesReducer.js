@@ -4,18 +4,41 @@ import {TOGGLE_OPEN_FLAG,OPEN_FLAG_MODAL,CLOSE_MODAL,FORM_CHANGE,
   ,FLAG_REMOVE_ERROR} from './siteActions'
 const intialSitesList={}
 
+function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) {
+          if(typeof obj[attr]=='object'){
+            copy[attr]=clone(obj[attr]);
+          }else{
+            copy[attr] = obj[attr];
+          }          
+        }
+    }
+    return copy;
+}
+
 export function sitesReducer(state, action){
 	state = state || intialSitesList;
+  let newState=clone(state)
+  if(!action.type.endsWith("ERROR")){
+    Object.keys(newState).map((key, index)=>{
+      newState[key].error=null;
+      newState[key].flags.map((flag,index)=>{
+        flag.error=null;
+      })
+    })
+  }
   if(action.type==LOAD_SITES_SUCESS){
 		return action.sites;
 	}else if(action.type==LOAD_SITES_ERROR){
     return intialSitesList;
 	}else if(action.type==TOGGLE_OPEN_FLAG){
-    let newState=Object.assign({}, state);
     newState[action.siteKey]["openFlag"]=!newState[action.siteKey]["openFlag"];
 		return newState;
 	}else if(action.type==OPEN_FLAG_MODAL){
-    let newState=Object.assign({}, state);
+    newState[action.siteKey]["historyState"]=clone(newState[action.siteKey]);
     newState[action.siteKey]["openModalFlag"]=true;
     newState[action.siteKey]["mode"]=action.mode;
     if (action.mode=="ADD"){
@@ -26,27 +49,25 @@ export function sitesReducer(state, action){
     }
 		return newState;
 	}else if(action.type==CLOSE_MODAL){
-    let newState=Object.assign({}, state);
-    newState[action.siteKey]["openModalFlag"]=false;
-    newState[action.siteKey]["mode"]=null;
-    newState[action.siteKey]["editFlagIndex"]=-1;
-    if (action.mode=="ADD"){
-      newState[action.siteKey].flags.splice(-1,1);
-    }
+    newState[action.siteKey]=clone(newState[action.siteKey]["historyState"]);
+    newState[action.siteKey]["historyState"]=undefined;
+    // newState[action.siteKey]["openModalFlag"]=false;
+    // newState[action.siteKey]["mode"]=null;
+    // newState[action.siteKey]["editFlagIndex"]=-1;
+    // if (action.mode=="ADD"){
+    //   newState[action.siteKey].flags.splice(-1,1);
+    // }
 		return newState;
 	}else if(action.type==FORM_SAVE){
-    let newState=Object.assign({}, state);
     newState[action.siteKey]["openModalFlag"]=false;
     newState[action.siteKey]["mode"]=null;
     newState[action.siteKey]["editFlagIndex"]=-1;
 		return newState;
 	}else if(action.type==FORM_CHANGE){
-    let newState=Object.assign({}, state);
     let editFlag=newState[action.siteKey].flags[newState[action.siteKey].editFlagIndex];
     editFlag[action.name]=action.value;
 		return newState;
 	}else if(action.type==FLAG_SAVE_SUCESS){
-    let newState=Object.assign({}, state);
     let updatedFlag=newState[action.siteKey].flags[newState[action.siteKey].editFlagIndex];
     updatedFlag=action.newF;
     newState[action.siteKey]["openModalFlag"]=false;
@@ -54,34 +75,28 @@ export function sitesReducer(state, action){
     newState[action.siteKey]["editFlagIndex"]=-1;
 		return newState;
 	}else if(action.type==FLAG_SAVE_ERROR){
-    let newState=Object.assign({}, state);
     let errorFlag=newState[action.siteKey].flags[newState[action.siteKey].editFlagIndex];
     errorFlag["error"]=action.error;
 		return newState;
 	}else if(action.type==REMOVE_ALERT){
-    let newState=Object.assign({}, state);
     newState[action.siteKey].removeAlertFlag=true;
     newState[action.siteKey].removeFlagIndex=action.flagIndex;
 		return newState;
 	}else if(action.type==CANCEL_REMOVE){
-    let newState=Object.assign({}, state);
     newState[action.siteKey].removeAlertFlag=false;
     newState[action.siteKey].removeFlagIndex=-1;
 		return newState;
 	}else if(action.type==CONFIRM_REMOVE){
-    let newState=Object.assign({}, state);
     newState[action.siteKey].flags.splice(newState[action.siteKey].removeFlagIndex, 1);
     newState[action.siteKey].removeAlertFlag=false;
     newState[action.siteKey].removeFlagIndex=-1;
 		return newState;
 	}else if(action.type==FLAG_REMOVE_SUCESS){
-    let newState=Object.assign({}, state);
     newState[action.siteKey].flags.splice(newState[action.siteKey].removeFlagIndex, 1);
     newState[action.siteKey].removeAlertFlag=false;
     newState[action.siteKey].removeFlagIndex=-1;
 		return newState;
 	}else if(action.type==FLAG_REMOVE_ERROR){
-    let newState=Object.assign({}, state);
     newState[action.siteKey].error=action.error;
 		return newState;
 	}

@@ -26,6 +26,11 @@ const FlagsGrid = ({site,toggleFunc,siteKey,modalCancelFunc,modalSaveFunc,
 
           </Row>
         </div>
+        {site.error?
+            <Alert bsStyle="danger">
+              <h4>Error: {site.error}</h4>
+            </Alert>:null
+        }
         {site.removeAlertFlag?
             <Alert bsStyle="warning" onDismiss={() => { handleAlertDismiss(siteKey) }}>
               <h4>Do you want to remove Flag: {site.flags[site.removeFlagIndex].flagType}?</h4>

@@ -74,9 +74,13 @@ export function removeConfirm(siteKey){
 
 export const LOAD_SITES_SUCESS="LOAD_SITES_SUCESS";
 export function loadSitesSuccess(sites){
+	let enrichedSites={}
+	sites.map((site,index)=>{
+		enrichedSites[site._id]=site;
+	})
   return {
 		type:LOAD_SITES_SUCESS,
-		sites:sites
+		sites:enrichedSites
 	}
 }
 
@@ -90,8 +94,12 @@ export function loadSitesError(error){
 
 export function loadSitesFromAPI(){
 	return function(dispatch) {
-    return getAllSites().then(sites => {
-      dispatch(loadSitesSuccess(sites));
+    return getAllSites().then(response => {
+			if(response.stack){
+				dispatch(loadSitesError(response.message));
+			}else{
+				dispatch(loadSitesSuccess(response));
+			}
     }).catch(error => {
       dispatch(loadSitesError(error));
     });
@@ -119,8 +127,12 @@ export function flagSaveSucess(siteKey,newFlag){
 export function addFlagAPI(siteKey,sites){
 	const insertFlag=sites[siteKey].flags[sites[siteKey].editFlagIndex]
 	return function(dispatch) {
-    return createNewFlag(siteKey,insertFlag.startDate,insertFlag.endDate,insertFlag.flagType).then(newFlag => {
-      dispatch(flagSaveSucess(siteKey,newFlag));
+    return createNewFlag(siteKey,insertFlag.startDate,insertFlag.endDate,insertFlag.flagType).then(response => {
+			if(response.stack){
+				dispatch(flagSaveError(siteKey,response.message));
+			}else{
+				dispatch(flagSaveSucess(siteKey,response));
+			}
     }).catch(error => {
       dispatch(flagSaveError(siteKey,error));
     });
@@ -131,8 +143,12 @@ export function editFlagAPI(siteKey,sites){
 	const editIndex=sites[siteKey].editFlagIndex;
 	const updateFlag=sites[siteKey].flags[editIndex]
 	return function(dispatch) {
-    return updateExistingFlag(siteKey,editIndex,updateFlag.startDate,updateFlag.endDate,updateFlag.flagType).then(newFlag => {
-      dispatch(flagSaveSucess(siteKey,newFlag));
+    return updateExistingFlag(siteKey,editIndex,updateFlag.startDate,updateFlag.endDate,updateFlag.flagType).then(response => {
+			if(response.stack){
+				dispatch(flagSaveError(siteKey,response.message));
+			}else{
+				dispatch(flagSaveSucess(siteKey,response));
+			}
     }).catch(error => {
       dispatch(flagSaveError(siteKey,error));
     });
@@ -160,10 +176,10 @@ export function removeFlagAPI(siteKey,sites){
 	const removeIndex=sites[siteKey].removeFlagIndex;
 	return function(dispatch) {
     return removeExistingFlag(siteKey,removeIndex).then(response => {
-			if(response.message=='Flag Deleted'){
-				dispatch(flagRemoveSucess(siteKey));
+			if(response.stack){
+				dispatch(flagRemoveError(siteKey,response.message));
 			}else{
-				dispatch(flagRemoveError(siteKey,'Server Side Error'));
+				dispatch(flagRemoveSucess(siteKey));
 			}
     }).catch(error => {
       dispatch(flagRemoveError(siteKey,error));

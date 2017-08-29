@@ -17,7 +17,7 @@ Flag.propTypes = {
   flag: PropTypes.object,
   openModalFunc:PropTypes.func,
   flagIndex:PropTypes.number,
-  siteKey:PropTypes.number,
+  siteKey:PropTypes.string,
   removeAlertFunc:PropTypes.func
 };
 export default Flag;
