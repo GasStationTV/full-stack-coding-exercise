@@ -36,7 +36,8 @@ class SiteListContainer extends Component {
 	}
 }
 
-// The shape of the array will be validated within SiteList, the props are simply forwarded.
+// The shape of the array objects will be validated within <SiteList> using a custom prop validator.
+// It makes more sense to validate there because its the component which depends upon certain properties.
 SiteListContainer.propTypes = {
 	sites: PropTypes.array.isRequired,
 	sitesListIsLoading: PropTypes.bool.isRequired,

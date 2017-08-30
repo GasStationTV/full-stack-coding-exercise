@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import { fetchSiteData } from '../actions/thunks'
 import { selectSite } from '../actions/actionObjects'
 import PropTypes from 'prop-types'
-
-import { getSelectedSiteId, 
+import {getSelectedSiteId, 
 		getSelectedSiteName, 
 		getSelectedSiteFlags, 
 		getSelectedSiteIsLoading, 

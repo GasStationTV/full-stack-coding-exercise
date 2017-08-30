@@ -43,7 +43,9 @@ function sitesArr (state = [], action) {
 
 					// If there's an error, leave the form(s) open so that the user can try again.
 					siteArrCopy[indexOfSiteInArr].hasErrorSaving = true
-					siteArrCopy[indexOfSiteInArr].isSaving = false
+
+					// If there's an error saving to the server then the modal window needs to be closed in order to see the error message.
+					siteArrCopy[indexOfSiteInArr].showConfirmDeleteForFlagIndex = undefined
 				}
 				else{
 
@@ -51,10 +53,16 @@ function sitesArr (state = [], action) {
 					siteArrCopy[indexOfSiteInArr] = cloneDeep(siteObjectFromPayload)
 
 					// Make sure to close the form since the update succeeded.
+					// But don't take it down in case of an error or the user could lose data before re-submitting.
 					siteArrCopy[indexOfSiteInArr].showAddFlagForm = false
+
+					// It's important to errase any of the indexes because if a Flag Entry was deleted before calling the Save API, the existing indexes could be out of bounds.
 					siteArrCopy[indexOfSiteInArr].showEditFormForFlagIndex = undefined
-					siteArrCopy[indexOfSiteInArr].isSaving = false
+					siteArrCopy[indexOfSiteInArr].showConfirmDeleteForFlagIndex = undefined
 				}
+
+				// Whether an error happened or not, it's no longer saving.
+				siteArrCopy[indexOfSiteInArr].isSaving = false
 
 				return siteArrCopy
 			}
@@ -64,7 +72,8 @@ function sitesArr (state = [], action) {
 				// Ran into a little problem here because it's not possible to quickly get the ID of the "selected Site" because of the ways that the reducers were separated.
 				// It wouldn't be efficient in production, but one solution is to loop through all of the array elements an reset any Open/Edit flags.
 				// The solution is either to normalize the data or add a Root Reducer.
-				return state;
+				// Fow now, if you start to Edit or Add a Flag on a Site, the form will remain opened when you return.
+				return state
 			}
 
 			case actionTypes.SITES_LIST_RESPONSE: {
@@ -104,6 +113,31 @@ function sitesArr (state = [], action) {
 
 				// If someone opens/closes an EDIT window then make sure to hide the ADD form.
 				siteObj.showAddFlagForm = false
+
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
+
+				return siteArrCopy
+			}
+			case actionTypes.CONFIRM_DELETE_FLAG: {
+
+				const siteArrCopy = state.concat()
+				const siteIdFromPayload = action.payload.siteId
+				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
+
+				if(typeof action.payload.show !== "boolean")
+					throw new Error("Error in reducer for CONFIRM_DELETE_FLAG. action.payload.show should be Boolean.")
+
+				if(typeof action.payload.flagIndex !== "number")
+					throw new Error("Error in reducer for CONFIRM_DELETE_FLAG. action.payload.flagIndex should be Number.")
+
+				if(!siteObj.flags[action.payload.flagIndex])
+					throw new Error("Error in reducer for CONFIRM_DELETE_FLAG. The given flagIndex is out of bounds.")
+
+				// If the Site Object stores a number on showConfirmDeleteForFlagIndex then it means that the Flag has a Delete Confirm modal opened.
+				if(action.payload.show)
+					siteObj.showConfirmDeleteForFlagIndex = action.payload.flagIndex
+				else
+					siteObj.showConfirmDeleteForFlagIndex = undefined
 
 				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
 

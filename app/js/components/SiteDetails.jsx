@@ -44,7 +44,7 @@ function SiteDetails (props) {
 	const commonHeader = (
 				<div>
 					<h2>{props.siteName}</h2>
-					<div><Link to='/'>Close Site Details</Link></div>
+					<span style={{float:"right", marginTop:"-3em"}}><Link to='/'>Close Site Details</Link></span>
 					<div style={{marginTop:"1em"}}><AddFlagContainer /></div>
 					{ props.isSaving && isSavingTag }
 					{ props.hasErrorSaving && hasSavingErrorTag }

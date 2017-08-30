@@ -148,3 +148,18 @@ export const getFlagIndexBeingEditedForSelectedSite = createSelector(
 		return selectedSiteIdObj.showEditFormForFlagIndex
 	}
 )
+
+// Returns -1 if the selected Site Object does not have a Delete Modal open. Otherwise the value corresponds to the Flag index which has the modal visible.
+export const getFlagIndexWithDeleteModalForSelectedSite = createSelector(
+	getSelectedSiteObj,
+	selectedSiteIdObj => {
+
+		if(!selectedSiteIdObj || typeof selectedSiteIdObj.showConfirmDeleteForFlagIndex === "undefined")
+			return -1
+
+		if(typeof selectedSiteIdObj.showConfirmDeleteForFlagIndex !== "number" || !selectedSiteIdObj.flags[selectedSiteIdObj.showConfirmDeleteForFlagIndex])
+			throw new Error("Error in getFlagIndexWithDeleteModalForSelectedSite. The Flag Index selected for editing is out of bounds.")
+		
+		return selectedSiteIdObj.showConfirmDeleteForFlagIndex
+	}
+)

@@ -41,10 +41,6 @@ class AddFlagContainer extends Component {
 		this.props.dispatch(addFlag(this.props.siteId))
 	}
 
-	componentDidMount() {
-
-	}
-
 	render() {
 
 		if(this.props.showAddFlagForm){
