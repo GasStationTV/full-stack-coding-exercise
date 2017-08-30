@@ -1,3 +1,9 @@
+[x] Find out why the JSX List is not matching to the Filtered array (by date).... weird, weird, weird. 
+[x] Reset the Edit/New form on the state after a successful update.
+[x] The Edit functionality is not selecting the default option in the list.
+[x] Need to solve a bug dealing with "skipped records".  Currently the SiteDetails will print a message if there are no Flags in the database for the given site.  However it's possible that the <FlagRowContainer> component will return NULL if the EndDate exists in the past.
+[x] Create a dummy FlagRow component that will wire back the click events for EDIT/DELETE
+[x] Create a FlagRowContainer that will take care of rendering the Dummy Flag row, and also any EDIT functionality.
 [] Sort the results from the SiteList rest call. Mongo is putting the most recently saved document to the bottom.
 [] When selecting a Site, make sure to clear out any "hasErrorSaving" flag. Otherwise an error message could be hanging around from the last attempt
 [x] Solve MongoDB error when trying to update the Site Object: 'Modifiers operate on fields but we found type string instead. For example: {$mod: {<field>: ...}} not {$set: "{"flags":[{"flagType":"Retailer - Location Priority","startDate":"8/25/18","endDate":""}]}"}',
@@ -10,7 +16,7 @@
 		[x] Figure out a way to use BodyParser with "text/plain" or write a custom middleware to chunk the req.body.
 [x] Add form validation to the AddOrEditFlag dumb component.
 [] Clean up all of the state properties on the individual Sites array when the SiteDetailList is closed within the Reducer (likely by brute force).  For example, if the Add Flag form is open on a view, then it appears open when re-visiting the same site details page.
-[x] Fix weird warning that happens when canceling the AddFlag Form: Form submission canceled because the form is not connected
+[x] Fix weird warning that happens when canceling the AddFlag Form: "Form submission canceled because the form is not connected"
 [] Find out why HotReloading doesn't work within a Route (on the Site Details page).
 [x] Solve error from AddFlagContainerComponent:  React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) 
 [x] Solve infinite loop that started happening after clicking into a SiteDetails with an AddEditRow component.

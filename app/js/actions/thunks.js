@@ -130,7 +130,7 @@ export function saveSiteData(siteId, siteObj) {
 
 				return response
 			})
-			.then(response => dispatch(siteDataSaveSuccess(siteId)))
+			.then(response => dispatch(siteDataSaveSuccess(siteId, siteObj)))
 			.catch(error => dispatch(siteDataSaveError(siteId, error)))
 	};
 }
@@ -143,11 +143,11 @@ function siteDataIsSaving(siteId, isSaving) {
 	}
 }
 
-function siteDataSaveSuccess(siteId) {
+function siteDataSaveSuccess(siteId, siteObj) {
 
 	return {
 		type: actionTypes.SITE_DATA_SAVE_RESPONSE,
-		payload: { siteId },
+		payload: { siteId, siteObj },
 		error: false
 	}
 }

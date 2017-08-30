@@ -33,17 +33,28 @@ function sitesArr (state = [], action) {
 
 				const siteArrCopy = state.concat()
 				const siteIdFromPayload = action.payload.siteId
+				const siteObjectFromPayload = action.payload.siteObj
 				const indexOfSiteInArr = getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)
 
-				siteArrCopy[indexOfSiteInArr] = getSiteObjById(siteIdFromPayload, siteArrCopy)
+				if(action.error){
 
-				siteArrCopy[indexOfSiteInArr].isSaving = false
+					// Since there's an error, re-use the same Site object that's currently on the state (not the version sent to the server).
+					siteArrCopy[indexOfSiteInArr] = getSiteObjById(siteIdFromPayload, siteArrCopy)
 
-				// If there's no error then close the form(s), otherwise leave them open so that the user can try again.
-				if(action.error)
+					// If there's an error, leave the form(s) open so that the user can try again.
 					siteArrCopy[indexOfSiteInArr].hasErrorSaving = true
-				else
+					siteArrCopy[indexOfSiteInArr].isSaving = false
+				}
+				else{
+
+					// Since the update succeeded it is OK to add the new Site Object to the state.
+					siteArrCopy[indexOfSiteInArr] = cloneDeep(siteObjectFromPayload)
+
+					// Make sure to close the form since the update succeeded.
 					siteArrCopy[indexOfSiteInArr].showAddFlagForm = false
+					siteArrCopy[indexOfSiteInArr].showEditFormForFlagIndex = undefined
+					siteArrCopy[indexOfSiteInArr].isSaving = false
+				}
 
 				return siteArrCopy
 			}
@@ -70,6 +81,35 @@ function sitesArr (state = [], action) {
 				}
 			}
 
+			case actionTypes.EDIT_FLAG: {
+
+				const siteArrCopy = state.concat()
+				const siteIdFromPayload = action.payload.siteId
+				const siteObj = getSiteObjById(siteIdFromPayload, siteArrCopy)
+
+				if(typeof action.payload.show !== "boolean")
+					throw new Error("Error in reducer for EDIT_FLAG. action.payload.show should be Boolean.")
+
+				if(typeof action.payload.flagIndex !== "number")
+					throw new Error("Error in reducer for EDIT_FLAG. action.payload.flagIndex should be Number.")
+
+				if(!siteObj.flags[action.payload.flagIndex])
+					throw new Error("Error in reducer for EDIT_FLAG. The given flagIndex is out of bounds.")
+
+				// If the Site Object stores a number on showEditFormForFlagIndex then it means that the Flag is in a state of being edited.
+				if(action.payload.show)
+					siteObj.showEditFormForFlagIndex = action.payload.flagIndex
+				else
+					siteObj.showEditFormForFlagIndex = undefined
+
+				// If someone opens/closes an EDIT window then make sure to hide the ADD form.
+				siteObj.showAddFlagForm = false
+
+				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
+
+				return siteArrCopy
+			}
+
 			case actionTypes.ADD_FLAG: {
 
 				const siteArrCopy = state.concat()
@@ -80,6 +120,9 @@ function sitesArr (state = [], action) {
 					throw new Error("Error in reducer for ADD_FLAG. action.payload.show should be Boolean")
 
 				siteObj.showAddFlagForm = action.payload.show
+
+				// If someone opens/closes the ADD form on a Site Object, close any EDIT form.
+				siteObj.showEditFormForFlagIndex = undefined
 
 				siteArrCopy[getSiteIndexWithinStateArrayById(siteIdFromPayload, siteArrCopy)] = siteObj
 

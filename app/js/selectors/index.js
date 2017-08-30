@@ -133,3 +133,18 @@ export const getShowAddFlagFormForSelectedSite = createSelector(
 		return selectedSiteIdObj.showAddFlagForm ? true : false
 	}
 )
+
+// Returns -1 if the selected Site Object has no flags being edited, otherwise returns zero-based index corresponding to the position in the array being edited.
+export const getFlagIndexBeingEditedForSelectedSite = createSelector(
+	getSelectedSiteObj,
+	selectedSiteIdObj => {
+
+		if(!selectedSiteIdObj || typeof selectedSiteIdObj.showEditFormForFlagIndex === "undefined")
+			return -1
+
+		if(typeof selectedSiteIdObj.showEditFormForFlagIndex !== "number" || !selectedSiteIdObj.flags[selectedSiteIdObj.showEditFormForFlagIndex])
+			throw new Error("Error in getFlagIndexBeingEditedForSelectedSite. The Flag Index selected for editing is out of bounds.")
+		
+		return selectedSiteIdObj.showEditFormForFlagIndex
+	}
+)

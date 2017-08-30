@@ -45,6 +45,7 @@ export default class AddOrEditFlag extends Component {
 			else
 				newStartTimestampUnix = possibleStartTimestamp
 		}
+		
 		if(this.state.endDate){
 
 			var possibleEndTimestamp = Date.parse(this.state.endDate)
@@ -117,29 +118,34 @@ export default class AddOrEditFlag extends Component {
 
 
 		return (
+
 			<form onSubmit={this.handleFormSubmit}>
+				<fieldset>
+					<legend>{this.props.isAddForm ? "Add a New Site Flag" : "Edit Site Flag"}</legend>
 
-				{errorMessageBlock}
-				
-				<label>
-					Flag Type:
-					<select onChange={this.handleFlagTypeChange}>
-						{listMenuOptions}
-					</select>
-				</label>
+					{errorMessageBlock}
+					
+					<label>
+						Flag Type:
+						<select onChange={this.handleFlagTypeChange} value={this.state.flagType}>
+							{listMenuOptions}
+						</select>
+					</label>
 
-				<label>
-					Start Date:
-					<input type="text" value={this.state.startDate} onChange={this.handleStartDateChange} />
-				</label>
+					<label>
+						Start Date:
+						<input type="text" value={this.state.startDate} onChange={this.handleStartDateChange} />
+					</label>
 
-				<label>
-					End Date:
-					<input type="text" value={this.state.endDate} onChange={this.handleEndDateChange} />
-				</label>
-
-				<input type="submit" value={createOrUpdateText} />
-				<button type="button" onClick={this.handleCancel} >Cancel</button>
+					<label>
+						End Date:
+						<input type="text" value={this.state.endDate} onChange={this.handleEndDateChange} />
+					</label>
+					<div>
+						<input type="submit" value={createOrUpdateText} />
+						<button type="button" onClick={this.handleCancel} >Cancel</button>
+					</div>
+				</fieldset>
 			</form>
 		);
 	}

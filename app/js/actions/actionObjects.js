@@ -43,13 +43,6 @@ export function editFlagCancel(siteId, flagIndex) {
 	}
 }
 
-export function updateFlag(siteId, flagIndex, flagObj) {
-	return {
-		type: actionTypes.UPDATE_FLAG,
-		payload: { siteId, flagIndex, flagObj }
-	}
-}
-
 export function addFlag(siteId) {
 	return {
 		type: actionTypes.ADD_FLAG,
@@ -64,10 +57,4 @@ export function addFlagCancel(siteId) {
 	}
 }
 
-export function createNewFlag(siteId, flagObj) {
-	return {
-		type: actionTypes.CREATE_FLAG,
-		payload: { siteId, flagObj }
-	}
-}
 

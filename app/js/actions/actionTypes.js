@@ -1,8 +1,6 @@
 export const EDIT_FLAG = 'EDIT_FLAG'
-export const UPDATE_FLAG = 'UPDATE_FLAG'
 
 export const ADD_FLAG = 'ADD_FLAG'
-export const CREATE_FLAG = 'CREATE_FLAG'
 
 export const CONFIRM_DELETE_FLAG = 'CONFIRM_DELETE_FLAG'
 
