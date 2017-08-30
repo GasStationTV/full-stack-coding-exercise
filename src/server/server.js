@@ -3,15 +3,19 @@ import bodyParser from 'body-parser';
 import {setupConnection} from './data/connection'
 import siteRoutes from './routes/siteRoutes'
 import flagRoutes from './routes/flagRoutes'
+import {seedSampleData} from './data/seedData'
+import fs from 'fs';
 
+const configPath='./config.json';
 const port = process.env.PORT || 8080;
-
+const parsedConfig = JSON.parse(fs.readFileSync(configPath, 'UTF-8'));
 
 export function setupApp(){
-  const dbConnectPromise=setupConnection();
+  const dbConnectPromise=setupConnection(parsedConfig);
   return new Promise( (resolve, reject)=>{
       dbConnectPromise.then(()=> {
           console.log("Connected to database");
+          seedSampleData(parsedConfig);
           const app = express();
           app.use('/js',express.static(process.cwd() + "/build/client"));
           app.use('/',express.static(process.cwd() + "/src/public"));

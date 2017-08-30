@@ -1,7 +1,8 @@
 const request = require('supertest');
 import {setupApp} from '../../src/server/server';
 
-
+//Important: Please update testSiteKey before running test cases
+const testSiteKey=3;
 describe('Test site routes', () => {
     let agent=null;
 
@@ -24,7 +25,7 @@ describe('Test site routes', () => {
     },10000);
     test('It should create new flag', (done) => {
         agent.post("/api/flag")
-          .type('form').send({startDate:"2017-08-01",endDate:"2017-08-30",flagType:"GSTV - Unsellable",siteKey:7}).
+          .type('form').send({startDate:"2017-08-01",endDate:"2017-08-30",flagType:"GSTV - Unsellable",siteKey:testSiteKey}).
           set('Accept', 'application/json').then(response => {
             expect(typeof response).toBe('object')
             expect(response.body.flagType).toEqual("GSTV - Unsellable")
@@ -35,7 +36,7 @@ describe('Test site routes', () => {
 
     },10000);
     test('It should update existing flag', (done) => {
-        agent.put("/api/flag/7/0")
+        agent.put("/api/flag/"+testSiteKey+"/0")
           .type('form').send({startDate:"2017-08-01",endDate:"2017-08-30",flagType:"GSTV - Research Survey"}).
           set('Accept', 'application/json').then(response => {
             expect(typeof response).toBe('object')
@@ -47,7 +48,7 @@ describe('Test site routes', () => {
 
     },10000);
     test('It should delete existing flag', (done) => {
-        agent.delete("/api/flag/7/0")
+        agent.delete("/api/flag/"+testSiteKey+"/0")
           .type('form').
           set('Accept', 'application/json').then(response => {
             expect(typeof response).toBe('object')
