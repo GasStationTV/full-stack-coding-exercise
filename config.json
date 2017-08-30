@@ -1,0 +1,14 @@
+{
+  "database":{
+    "connecStrategy":"PROD",
+    "hostName":"localhost",
+    "port":"27017",
+    "db":"gstv",
+    "user":"gstv",
+    "pwd":"gstv",
+    "authSource":"admin"
+  },
+  "seedDataOnStartup":true,
+  "seedDataFilePath":"./sample_seed.json"
+}
+

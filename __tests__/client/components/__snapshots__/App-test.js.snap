@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App is renderable 1`] = `
+<div
+  className="row"
+>
+  <div
+    className="row"
+  >
+    <nav
+      className="navbar navbar-default"
+    >
+      <div
+        className="container"
+      >
+        <div
+          className="navbar-header"
+        >
+          <a
+            className="navbar-brand"
+            href="#"
+          >
+            GSTV - Full Stack Coding Excercise
+          </a>
+          <button
+            className="navbar-toggle collapsed"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              className="sr-only"
+            >
+              Toggle navigation
+            </span>
+            <span
+              className="icon-bar"
+            />
+            <span
+              className="icon-bar"
+            />
+            <span
+              className="icon-bar"
+            />
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div
+    className="row"
+  >
+    <ul
+      className="list-group"
+    />
+  </div>
+</div>
+`;
