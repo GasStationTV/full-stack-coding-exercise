@@ -1,5 +1,19 @@
+[] Unit Test with Mocha in order of importance
+	[] Reducers
+	[] Selectors
+	[] Action Creators
+	[] JS DOM
+	[] REST API
+		[x] Research Mockgoose. It looks like it requires MongoDB to be installed locally.
+		[] Configure an ENV variable within Unit Test and adapt REST service.
+		[] Since MongoDB is in Cloud, setup another "testDB" where the default data script can be loaded each time.
+		[] Modify the "defaultData" method to insert addtional "flags" within the array on each "site" document. 
+	[] Microservices: Configure a consumer contract and Pact broker
+
+[] Integrate application with Web Components or React Components for the "Date Pickers"
 [x] Finish wiring up the DELETE actions and update the server through a POST.
 	[x] Make sure that the reducers clear out any array indexes after the server responds because the positions may have changed.
+
 [x] Create a generic a <ModalConfirm/> component that can be used for "Delete Flag".
 [x] Find out why the JSX List is not matching to the Filtered array (by date).... weird, weird, weird. 
 [x] Reset the Edit/New form on the state after a successful update.
@@ -17,6 +31,7 @@
 		[x] Install the Body Parser middle-ware for Express.
 		[x] Find out why FETCH is doing a pre-flight request (i.e. OPTIONS whenever ApplicationType JSON is put in the headers)
 		[x] Figure out a way to use BodyParser with "text/plain" or write a custom middleware to chunk the req.body.
+
 [x] Add form validation to the AddOrEditFlag dumb component.
 [] Clean up all of the state properties on the individual Sites array when the SiteDetailList is closed within the Reducer (likely by brute force).  For example, if the Add Flag form is open on a view, then it appears open when re-visiting the same site details page.
 [x] Fix weird warning that happens when canceling the AddFlag Form: "Form submission canceled because the form is not connected"
@@ -27,6 +42,7 @@
 [x] Ensure that all Components have PropTypes configured.
 [x] Design process for processing the Flag objects in an array on the Site Details page.
 	[x] Create <FlagRowContainer> objects which accept a SiteID and a FlagIndex as a prop. That way there's no need to pass forward/back callbacks and pollute the SiteDetailsContainer.
+
 [x] Come up with a way to un-select the current site by routing <Link>ing back to the main page.
 [] Refactor the Reducer for SELECT_SITE.  It doesn't need to send a flag in the payload now because another action will be used for un-selecting.
 [x] Find out why Selector for getSelectedSiteIsLoaded is returning stale data from the state.
@@ -37,6 +53,7 @@
 [] Refactor codebase to get rid of inconsistent use of "siteList..." versus "sitesList".
 [x] Store the selected Site ID on the State after a Route change so that the Site Details can be memoized in various selectors.
 	[x] Move the info about the SiteList, such as error, inProgress, etc. into its own Key on the state and combine reducers. 
+
 [x] Refactor the dispatch calls for "isLoading(false)" on SiteDeails Load/Save.  The Reducers can infer when the action for the Response or Error is given.
 [] Find out why the ES7 "rest" operators is reporting a syntax error in the browser.  Chrome works with the same syntax natively.  Maybe it's an ESlint thing?
 [] Confirm that WebPack will strip out console.log() statements in production.
@@ -44,15 +61,18 @@
 	[x] Figure out why MapStateToProps is not reflecting the state returned from the reducer in the Container method.
 	[x] Explain why there seems to be 2 separate Redux stores.
 	[x] Find out why the entry page (/app/js/app.js) is executed twice.
+
 [x] Add CORS support for the REST service.
 [x] Fix error that started showing up: Module not found: Error: Can't resolve 'whatwg-fetch' in ...
 	[x] I had to take out the Pollyfill I created for "fetch" in the WebPack config.  Maybe I need to import another library like Axios or manually pollyfill?
+
 [x] Create a Container component for the SiteList that will take care of loading the data from the API if the state is empty.
 [] Setup Decorators to validate function inputs, like TypeScript.
 [x] Stub out actions with basic Thunk workflow.
 	[x] Decide on convention for Action types.  SFA
 		[x] How to deal with Errors on PUT "SiteData" which has a SiteID associated with the Payload.
 	[x] Create Thunk Aysnc Actions for GetSiteList, GetSiteData(SiteID), SaveSiteData(siteId)
+
 [x] Decide on a process for loading data from the server and saving mutations.
 [x] Design shape of reducers
 [] Find a way to keep the "key" entries unique on <flag> components within Site Details view.
@@ -68,12 +88,6 @@
 		[x] Verify that the document exists first, no upserting. 
 		[x] Validate contents of the Site document.
 	[] Setup Mongoose to validate the Site Update route.
-	[] Unit test with Mocha/Chai
-		[x] Research Mockgoose. It looks like it requires MongoDB to be installed locally.
-		[] Configure an ENV variable within Unit Test and adapt REST service.
-		[] Since MongoDB is in Cloud, setup another "testDB" where the default data script can be loaded each time.
-		[] Modify the "defaultData" method to insert addtional "flags" within the array on each "site" document. 
-	[] Configure a consumer contract and Pact broker for Microservices
 
 [x] Configure server-side framework
 	[x] Install Express
