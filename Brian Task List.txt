@@ -1,4 +1,6 @@
 [] Unit Test with Mocha in order of importance
+	[] Components
+		[x] ModalConfirm
 	[] Reducers
 	[] Selectors
 	[] Action Creators

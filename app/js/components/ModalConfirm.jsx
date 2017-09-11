@@ -27,10 +27,10 @@ function ModalConfirm (props) {
 
 	return (<div style={modalWrapperCss}>
 				<div style={modalContent}>
-					<div>{props.message}</div>
+					<div className='container--message'>{props.message}</div>
 					<div style={{marginTop: "1em"}}>
-						<button type='button' onClick={props.onConfirm}>Confirm</button>
-						<button type='button' onClick={props.onCancel}>Cancel</button>
+						<button type='button' className='button--confirm' onClick={props.onConfirm}>Confirm</button>
+						<button type='button' className='button--cancel' onClick={props.onCancel}>Cancel</button>
 					</div>
 				</div>
 			</div>)
