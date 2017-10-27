@@ -1,0 +1,53 @@
+{
+  "name": "full-stack-coding-exercise",
+  "version": "1.0.0",
+  "description": "coding exercise for gas station tv",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjugger/full-stack-coding-exercise.git"
+  },
+  "keywords": [
+    "full",
+    "stack",
+    "es6",
+    "mongoDB",
+    "node.js",
+    "coding",
+    "kata"
+  ],
+  "author": "Mukhtar Jugger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjugger/full-stack-coding-exercise/issues"
+  },
+  "homepage": "https://github.com/mjugger/full-stack-coding-exercise#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "stylus": "^0.54.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "material-ui": "^0.19.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
+  }
+}
