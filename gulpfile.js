@@ -4,7 +4,6 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const stylus = require('gulp-stylus');
 const cleanMinify = require('gulp-clean-css');
-const imagemin = require('gulp-imagemin');
 const browserify = require('browserify');
 const watchify = require('watchify');
 const babelify = require('babelify');
@@ -13,8 +12,9 @@ const buffer = require('vinyl-buffer');
 const gutil = require('gulp-util');
 
 const customOpts = {
-  entries: ['./app/app.jsx'],
-  debug: false
+  entries: ['./app/index.jsx'],
+  debug: false,
+  extensions: ['.jsx','.js']
 };
 const opts = Object.assign({}, watchify.args, customOpts);
 const b = watchify(browserify(opts));
@@ -41,6 +41,12 @@ gulp.task('scripts', bundle); // so you can run `gulp js` to build the file
 b.on('update', bundle); // on any dep update, runs the bundler
 b.on('log', gutil.log); // output build logs to terminal
 
+gulp.task('compressHTML', () =>
+    gulp.src(['app/index.html'])
+        .pipe( htmlMinify() )
+        .pipe( gulp.dest('dist') )
+);
+
 gulp.task('styles', () =>
     gulp.src('app/styles/styles.styl')
         .pipe( stylus() )
@@ -49,8 +55,9 @@ gulp.task('styles', () =>
 );
 
 gulp.task('watch', () => {
-    gulp.watch('app/styles/*.styl',['styles']);
+  gulp.watch('app/index.html',['compressHTML']);
+  gulp.watch('app/styles/*.styl',['styles']);
     //gulp.watch('app/scripts/*.js',['scripts']);
 });
 
-gulp.task('default',['styles','scripts','compressImagess','watch']);
+gulp.task('default',['compressHTML','styles','scripts','watch']);
