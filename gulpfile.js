@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const htmlMinify = require('gulp-htmlmin');
-const babel = require('gulp-babel');
+//const gbabel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const stylus = require('gulp-stylus');
 const cleanMinify = require('gulp-clean-css');
@@ -10,7 +10,8 @@ const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const gutil = require('gulp-util');
-
+const mocha = require('gulp-mocha');
+const babel = require('babel-register');
 const customOpts = {
   entries: ['./app/index.jsx'],
   debug: false,
@@ -47,6 +48,16 @@ gulp.task('compressHTML', () =>
         .pipe( gulp.dest('dist') )
 );
 
+gulp.task('frontendTest', () =>
+  gulp.src(['app/**/*spec.jsx'], { read: false })
+    .pipe(mocha({
+      reporter: 'nyan',
+      require: ['./setupTest.js'],
+      compilers: 'js:babel-core/register'
+  }))
+    .on('error', gutil.log)
+);
+
 gulp.task('styles', () =>
     gulp.src('app/styles/styles.styl')
         .pipe( stylus() )
@@ -57,7 +68,7 @@ gulp.task('styles', () =>
 gulp.task('watch', () => {
   gulp.watch('app/index.html',['compressHTML']);
   gulp.watch('app/styles/*.styl',['styles']);
-    //gulp.watch('app/scripts/*.js',['scripts']);
+  gulp.watch('app/**/*.jsx',['frontendTest']);
 });
 
-gulp.task('default',['compressHTML','styles','scripts','watch']);
+gulp.task('default',['frontendTest','compressHTML','styles','scripts','watch']);
