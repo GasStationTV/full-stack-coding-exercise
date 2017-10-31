@@ -10,7 +10,9 @@
     "start-api": "cd ./api && npm run start",
     "start-client": "cd ./client && npm run start",
     "start": "npm run start-api && npm run start-client",
-    "test": "cd ./client && npm run test"
+    "test-client": "cd ./client && npm run test",
+    "test-api": "cd ./api && npm run test",
+    "test": "npm run test-client && npm run test-api"
   },
   "repository": {
     "type": "git",
