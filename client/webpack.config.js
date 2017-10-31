@@ -14,7 +14,10 @@ module.exports = env => {
       new Webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
-      new UglifyJSPlugin()
+      new UglifyJSPlugin({
+        sourceMap: true,
+        exclude: /\*.spec.js/
+      })
     ])
   }
 

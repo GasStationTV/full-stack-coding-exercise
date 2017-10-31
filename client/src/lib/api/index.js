@@ -4,10 +4,12 @@ import ApiMap from './api-map.js'
 
 const KEY_REGEX = /:[_0-9a-zA-Z]*/g
 const INDEX_AFTER_COLON = 1
+const URL = process.env.NODE_ENV === 'production' ?
+  'http://34.208.204.136:5001/' : 'http://localhost:5001'
 
 class api {
   constructor() {
-    this.request = Axios.create({baseURL: 'http://localhost:5001'})
+    this.request = Axios.create({baseURL: URL})
   }
 
   // return [key]
