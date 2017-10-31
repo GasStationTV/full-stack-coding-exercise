@@ -178,5 +178,5 @@ build/Release
 node_modules
 
 # compiled files
-dist/assets
+assets
 yarn.lock
