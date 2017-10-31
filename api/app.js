@@ -8,7 +8,6 @@ import Cors from 'koa2-cors'
 import Routes from './routes'
 
 const serve = ({env, port}) => {
-  console.log('env: ', env)
   if (env !== 'testing') {
     Mongoose.connect('mongodb://34.208.204.136:27017/gstv', { useMongoClient: true })
     Mongoose.Promise = Bluebird

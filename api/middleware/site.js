@@ -51,7 +51,7 @@ const siteFlagParam = async (site_flag_id, ctx, next) => {
   if (has_site_flag_id) {
     await next()
   } else {
-    ctx.status = 400
+    ctx.status = 404
     ctx.body = {
       code: 'site_flag_id not found',
       message: `site(${site._id}) does not have site flag id(${site_flag_id})`
