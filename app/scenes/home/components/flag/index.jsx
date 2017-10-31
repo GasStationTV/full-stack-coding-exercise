@@ -24,10 +24,10 @@ class Flag extends Component {
 }
 
 Flag.PropTypes = {
-  id: PropTypes.String.isRequired,
-  flagType: PropTypes.String.isRequired,
-  startDate: PropTypes.String,
-  endDate: PropTypes.String
+  id: PropTypes.string.isRequired,
+  flagType: PropTypes.string.isRequired,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string
 };
 
 export default Flag;

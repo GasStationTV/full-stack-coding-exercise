@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import * as HomeActions from './actions';
 import Flag from './components/flag';
 import {
   Table,
@@ -35,9 +37,13 @@ class Home extends Component {
   }
 }
 
+Home.PropTypes = {
+  flags: PropTypes.array.isRequired
+}
+
 function mapStateToProps(state) {
   return {
-    flags: flags
+    flags: state.flags
   };
 }
 

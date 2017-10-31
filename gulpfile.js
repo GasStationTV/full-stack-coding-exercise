@@ -52,7 +52,7 @@ gulp.task('frontendTest', () =>
   gulp.src(['app/**/*spec.jsx'], { read: false })
     .pipe(mocha({
       reporter: 'nyan',
-      require: ['./setupTest.js'],
+      require: ['./setupTest.js', 'jsdom-global/register'],
       compilers: 'js:babel-core/register'
   }))
     .on('error', gutil.log)
