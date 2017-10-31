@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "./node_modules/.bin/pm2 start ./process.json",
+    "stop": "./node_modules/.bin/pm2 kill",
     "test": "./node_modules/.bin/mocha --require babel-register ./test/helpers.js --recursive --exit ./test"
   },
   "dependencies": {

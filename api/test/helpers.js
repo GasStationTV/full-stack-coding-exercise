@@ -14,7 +14,7 @@ const DB_NAME = 'gstv_unit_test'
 
 before(async function() {
   try {
-    await Mongoose.connect(`mongodb://127.0.0.1:27017/${DB_NAME}`, {
+    await Mongoose.connect(`mongodb://34.208.204.136:27017/${DB_NAME}`, {
       useMongoClient: true
     })
     Mongoose.Promise = Bluebird
