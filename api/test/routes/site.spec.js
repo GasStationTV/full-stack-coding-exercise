@@ -1,9 +1,9 @@
-describe('routes/flag-type.js', function() {
+describe('routes/site.js', function() {
 
-  describe('[GET]: /flag', () => {
-    it('expect to return all the flag type', function(done) {
+  describe('[GET]: /site', function() {
+    it('expect to return all the sites', function(done) {
       request
-        .get('/flag')
+        .get('/site')
         .then(response => {
           const { res } = response
           expect(response).to.have.status(200)
