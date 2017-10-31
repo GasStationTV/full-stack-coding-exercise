@@ -1,0 +1,25 @@
+{
+  "name": "full-stack-coding-exercise",
+  "version": "1.0.0",
+  "description": "full stack exercise for gstv",
+  "main": "index.js",
+  "scripts": {
+    "install-client-dep": "cd ./client && npm install",
+    "install-api-dep": "cd ./api && npm install",
+    "install-dep": "npm run install-api-dep && npm run install-client-dep",
+    "start-api": "cd ./api && npm run start",
+    "start-client": "cd ./client && npm run start",
+    "start": "npm run start-api && npm run start-client",
+    "test": "cd ./client && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alphaXkiller/full-stack-coding-exercise.git"
+  },
+  "author": "Franklin Huang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alphaXkiller/full-stack-coding-exercise/issues"
+  },
+  "homepage": "https://github.com/alphaXkiller/full-stack-coding-exercise#readme"
+}

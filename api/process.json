@@ -1,0 +1,13 @@
+{
+    "apps": [
+      {
+        "name"        : "api",
+        "script"      : "./app.js",
+        "watch"       : true,
+        "interpreter" : "./node_modules/.bin/babel-node",
+        "env": {
+          "NODE_ENV": "development"
+        }
+      }
+    ]
+}
