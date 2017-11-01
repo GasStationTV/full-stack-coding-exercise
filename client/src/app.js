@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   onSelectFlag = flag => this.setState(prevState => ({
-    form: R.merge(this.state.form, {flag_id: flag.value})
+    form: R.merge(prevState.form, {flag_id: flag.value})
   }))
 
   onPickDate = type => date => this.setState(prevState => ({
@@ -88,19 +88,27 @@ class App extends React.Component {
   }
 
   onShowModal = selected_site_id => (modal_type, selected_site_flag) => () => {
-    let new_state = {
+    const new_state = {
       selected_site_id, modal_type,
       show_modal: true
     }
 
     if (selected_site_flag) {
       const { start_date, end_date } = selected_site_flag
-      new_state.selected_site_flag = selected_site_flag
-      new_state.form = {
-        flag_id: selected_site_flag.flag._id,
-        start_date: start_date ? Moment(start_date) : null,
-        end_date: end_date ? Moment(end_date) : null,
-      }
+      const state_with_selected_site_flag = R.merge(new_state,
+        {
+          selected_site_flag,
+          form: {
+            flag_id: selected_site_flag.flag._id,
+            start_date: start_date ? Moment(start_date) : null,
+            end_date: end_date ? Moment(end_date) : null,
+          }
+        }
+      )
+
+      this.setState(state_with_selected_site_flag)
+
+      return
     }
 
     this.setState(new_state)
