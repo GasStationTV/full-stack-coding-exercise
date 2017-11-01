@@ -1,8 +1,8 @@
 import Router from 'koa-router'
 import BodyParser from 'koa-body'
 
-import Middleware from '../middleware'
-import Validator from '../validator'
+import Middleware from '../middlewares'
+import Validator from '../validators'
 
 const routes = () => {
   const router = new Router()

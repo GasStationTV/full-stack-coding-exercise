@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import Middleware from '../middleware'
+import Middleware from '../middlewares'
 
 
 const routes = () => {
