@@ -6,7 +6,10 @@ import * as HomeActions from './actions';
 import Flag from './components/flag';
 import {
   Table,
-  TableBody
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow
 } from 'material-ui';
 
 class Home extends Component {
@@ -21,10 +24,18 @@ class Home extends Component {
     return (
       <div>
         <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Flag Type</TableHeaderColumn>
+              <TableHeaderColumn>Start Date</TableHeaderColumn>
+                <TableHeaderColumn>End Date</TableHeaderColumn>
+              <TableHeaderColumn>Actions</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
           <TableBody>
             {flags.map((flag, index) =>
               <Flag
-                id={index}
+                id={flag._id}
                 flagType={flag.flagType}
                 startDate={flag.startDate}
                 endDate={flag.endDate}

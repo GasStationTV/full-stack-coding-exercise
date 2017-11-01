@@ -35,12 +35,12 @@ describe('<Home/>', () => {
   const store = mockStore(mockState);
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(
-      <Provider store={store}>
-        <MuiThemeProvider>
-          <Home />
-        </MuiThemeProvider>
-      </Provider>
+    wrapper = shallow(
+      //<Provider store={store}>
+        //<MuiThemeProvider>
+          <Home store={store}/>
+        //</MuiThemeProvider>
+      //</Provider>
     );
   });
 

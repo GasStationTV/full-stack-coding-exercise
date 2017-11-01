@@ -41,7 +41,7 @@ export const fetchAllFlagsSuccess = flags => (
 
 export const fetchAllFlagsFailure = error => (
   {
-    type: FETCH_ALL_FLAGS,
+    type: FETCH_ALL_FLAGS_FAILED,
     error
   }
 );

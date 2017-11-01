@@ -1,13 +1,16 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+require('./server/db.js');
+
 var app = express();
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static('./dist'));
-
-app.get('*',function(req,res){
-	res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-});
+app.use(require('./server/controllers'));
 
 app.listen(3003,function(){
 	console.log('express server listening on port: ',this.address().port);
