@@ -5,7 +5,7 @@ var path = require('path');
 router.use('/api', require('./flag'));
 
 router.get('*',function(req,res){
-	res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+	res.sendFile(path.resolve('./', 'dist', 'index.html'));
 });
 
 module.exports = router;

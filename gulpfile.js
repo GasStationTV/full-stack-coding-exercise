@@ -12,6 +12,7 @@ const buffer = require('vinyl-buffer');
 const gutil = require('gulp-util');
 const mocha = require('gulp-mocha');
 const babel = require('babel-register');
+var modcss = require('modcss');
 const customOpts = {
   entries: ['./app/index.jsx'],
   debug: false,
@@ -22,7 +23,7 @@ const b = watchify(browserify(opts));
 b.transform(["babelify",{
     presets: ["env","react"]
 }]);
-
+b.transform(modcss, { paths: [ './dist/css' ] });
 function bundle() {
   return b.bundle()
     // log errors if they happen
@@ -59,7 +60,7 @@ gulp.task('frontendTest', () =>
 );
 
 gulp.task('styles', () =>
-    gulp.src('app/styles/styles.styl')
+    gulp.src('app/**/*.styl')
         .pipe( stylus() )
         .pipe( cleanMinify() )
         .pipe( gulp.dest('dist/css') )
@@ -67,8 +68,7 @@ gulp.task('styles', () =>
 
 gulp.task('watch', () => {
   gulp.watch('app/index.html',['compressHTML']);
-  gulp.watch('app/styles/*.styl',['styles']);
   gulp.watch('app/**/*.jsx',['frontendTest']);
 });
 
-gulp.task('default',['frontendTest','compressHTML','styles','scripts','watch']);
+gulp.task('default',['frontendTest','compressHTML','scripts','watch']);

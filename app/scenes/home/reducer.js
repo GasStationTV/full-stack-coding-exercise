@@ -1,10 +1,10 @@
 import {
   NOW_LOADING,
   LOADING_COMPLETE,
-  DELETE_FLAG,
-  DELETE_FLAG_FAILURE,
-  FETCH_ALL_FLAGS,
-  FETCH_ALL_FLAGS_FAILURE
+  DELETE_FLAG_SUCCEEDED,
+  DELETE_FLAG_FAILED,
+  FETCH_ALL_FLAGS_SUCCEEDED,
+  FETCH_ALL_FLAGS_FAILED
 } from './constants';
 
 const initialState = {
@@ -25,22 +25,22 @@ const HomeReducer = (state = initialState, action) => {
           loading: false
         });
 
-    case FETCH_ALL_FLAGS:
+    case FETCH_ALL_FLAGS_SUCCEEDED:
       return Object.assign({}, state, {
         flags: action.flags
       });
 
-    case FETCH_ALL_FLAGS_FAILURE:
-    case DELETE_FLAG_FAILURE:
+    case FETCH_ALL_FLAGS_FAILED:
+    case DELETE_FLAG_FAILED:
       return Object.assign({}, state, {
         error: action.error
       });
 
-    case DELETE_FLAG:
+    case DELETE_FLAG_SUCCEEDED:
       return Object.assign({}, state, {
-        flags: state.flags.filter(flag =>
-          flag.id !== action.id
-        )
+        flags: state.flags.filter(flag => {
+          return flag._id !== action.id;
+        })
       });
 
       default:

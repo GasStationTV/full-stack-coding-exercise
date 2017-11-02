@@ -7,12 +7,12 @@ import {
   FETCH_ALL_FLAGS_FAILED
 } from './constants';
 
-export const deleteFlagRequest = id => (
-  {
+export const deleteFlagRequest = id => {
+  return {
     type: DELETE_FLAG_REQUESTED,
     id
   }
-);
+};
 
 export const deleteFlagSuccess = id => (
   {

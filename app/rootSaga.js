@@ -1,8 +1,10 @@
-import "regenerator-runtime/runtime";
+import { fork } from 'redux-saga/effects';
 import flagSagas from './scenes/home/sagas';
+import flagFormSagas from './scenes/flagForm/sagas';
 
 const sagas = [
-  flagSagas
+  ...flagSagas,
+  ...flagFormSagas
 ]
 
 export default function* RootSaga() {

@@ -58,7 +58,7 @@ router.delete('/flag/:id', (req, res) => {
     if (error) {
       res.send(error);
     } else {
-      res.status(200).send();
+      res.status(200).json({id: req.params.id});
     }
 
   });
