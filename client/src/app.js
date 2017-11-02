@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   onSelectFlag = flag => this.setState(prevState => ({
-    form: R.merge(prevState.form, {flag_id: flag.value})
+    form: R.merge(prevState.form, {flag_id: flag ? flag.value : null})
   }))
 
   onPickDate = type => date => this.setState(prevState => ({
