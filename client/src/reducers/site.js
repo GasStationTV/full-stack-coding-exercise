@@ -5,6 +5,7 @@ import Action from '../actions'
 const { action_types } = Action
 const DEFAULT_STATE = []
 
+// isEndInTodayAndThePast :: Object -> Bool
 const isEndInTodayAndThePast = site_flag => (
   site_flag.end_date &&
   Moment(site_flag.end_date).diff(Moment(), 'days') <= 0
