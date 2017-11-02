@@ -102,7 +102,6 @@ const addFlag = async ctx => {
       R.objOf('site_flags'),
       R.append(new_site_flag._id),
       R.pluck('_id'),
-      R.tap(console.log)
     )(site.site_flags)
 
     const updated = await Bluebird.props({
