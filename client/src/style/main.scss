@@ -1,0 +1,12 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~react-select/dist/react-select';
+@import '~react-datepicker/dist/react-datepicker';
+@import './vendors/animate';
+
+.react-datepicker-wrapper {
+  width: 100%;
+
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+}
