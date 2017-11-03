@@ -1,0 +1,80 @@
+{
+  "name": "full-stack-coding-exercise",
+  "version": "1.0.0",
+  "description": "coding exercise for gas station tv",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "cross-env node index.js NODE_ENV=development",
+    "start": "cross-env node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjugger/full-stack-coding-exercise.git"
+  },
+  "keywords": [
+    "full",
+    "stack",
+    "es6",
+    "mongoDB",
+    "node.js",
+    "coding",
+    "kata"
+  ],
+  "author": "Mukhtar Jugger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjugger/full-stack-coding-exercise/issues"
+  },
+  "homepage": "https://github.com/mjugger/full-stack-coding-exercise#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babelify": "^8.0.0",
+    "browserify": "^14.5.0",
+    "chai": "^4.1.2",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-mocha": "^4.3.1",
+    "gulp-stylus": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "jsdom": "11.3.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "^4.0.1",
+    "redux-devtools": "^3.4.0",
+    "redux-mock-store": "^1.3.0",
+    "sinon": "^4.0.2",
+    "stylus": "^0.54.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.2",
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.19.4",
+    "modcss": "2.0.0",
+    "moment": "^2.19.1",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.12.5",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
+  }
+}
