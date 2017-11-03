@@ -10,25 +10,27 @@ import Flag from './components/flag';
 
 describe('<Home/>', () => {
   const mockState = {
-    flags: [
-      {
-        flagType: 'test1',
-        startDate: 'today',
-        endDate: 'tomorrow'
-      },
-      {
-        flagType: 'test2',
-        startDate: 'today',
-        endDate: 'tomorrow'
-      },
-      {
-        flagType: 'test3',
-        startDate: 'today',
-        endDate: 'tomorrow'
-      }
-    ],
-    loading: false,
-    error: null
+    HomeReducer: {
+      flags: [
+        {
+          flagType: 'test1',
+          startDate: 'today',
+          endDate: 'tomorrow'
+        },
+        {
+          flagType: 'test2',
+          startDate: 'today',
+          endDate: 'tomorrow'
+        },
+        {
+          flagType: 'test3',
+          startDate: 'today',
+          endDate: 'tomorrow'
+        }
+      ],
+      loading: false,
+      error: null
+    }
   };
 
   const mockStore = configureStore();

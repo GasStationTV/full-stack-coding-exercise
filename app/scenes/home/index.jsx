@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-const styles = require('./styles.styl');
+//const styles = require('./styles.styl');
 import * as HomeActions from './actions';
 import Flag from './components/flag';
 import {
@@ -106,8 +106,8 @@ class Home extends Component {
 
   renderNoFlagsFound() {
     return (
-      <div style={styles.noFlagsMessage}>
-        <Paper style={styles.paper}>
+      <div className="noFlagsMessage">
+        <Paper className="paper">
           <h3>There are no site flags.</h3>
           {this.renderCreateNewFlag()}
         </Paper>
@@ -142,7 +142,7 @@ class Home extends Component {
             )}
           </TableBody>
         </Table>
-        <div style={styles.buttonHolder}>{this.renderCreateNewFlag()}</div>
+        <div className="buttonHolder">{this.renderCreateNewFlag()}</div>
       </div>
     );
   }

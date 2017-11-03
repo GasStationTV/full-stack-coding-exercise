@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-const styles = require('./styles.styl');
 import * as FlagFormActions from './actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -219,14 +218,14 @@ class FlagForm extends Component {
     } = this.state;
 
     return (
-      <Paper style={styles.pageForm}>
+      <Paper className="pageForm">
         {this.renderValidationDialog()}
         <h1>{sceneHeaderText}</h1>
         <SelectField
           floatingLabelText="Select Flag type..."
           value={flagType}
           onChange={this.handleChange}
-           style={styles.fullWidth}
+           className="fullWidth"
         >
           <MenuItem
             value="Advertiser - Location Priority"
@@ -261,7 +260,7 @@ class FlagForm extends Component {
             primaryText="GSTV - Unsellable"
           />
         </SelectField>
-        <div style={styles.datePicker}>
+        <div className="datePicker">
           <DatePicker
             hintText="en-US locale"
             locale="en-US"
@@ -279,7 +278,7 @@ class FlagForm extends Component {
             hintText="End Date"
           />
         </div>
-        <div style={styles.buttonHolder}>
+        <div className="buttonHolder">
           <FlatButton
             onClick={this.toHomeScene}
             label="Cancel"

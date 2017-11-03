@@ -12,6 +12,7 @@ const buffer = require('vinyl-buffer');
 const gutil = require('gulp-util');
 const mocha = require('gulp-mocha');
 const babel = require('babel-register');
+const concat = require('gulp-concat');
 var modcss = require('modcss');
 const customOpts = {
   entries: ['./app/index.jsx'],
@@ -53,7 +54,7 @@ gulp.task('frontendTest', () =>
   gulp.src(['app/**/*spec.jsx'], { read: false })
     .pipe(mocha({
       reporter: 'nyan',
-      require: ['./setupTest.js', 'jsdom-global/register'],
+      require: ['stylus', 'modcss', './setupTest.js', 'jsdom-global/register'],
       compilers: 'js:babel-core/register'
   }))
     .on('error', gutil.log)
@@ -62,6 +63,7 @@ gulp.task('frontendTest', () =>
 gulp.task('styles', () =>
     gulp.src('app/**/*.styl')
         .pipe( stylus() )
+        .pipe(concat('styles.css'))
         .pipe( cleanMinify() )
         .pipe( gulp.dest('dist/css') )
 );
@@ -69,6 +71,7 @@ gulp.task('styles', () =>
 gulp.task('watch', () => {
   gulp.watch('app/index.html',['compressHTML']);
   gulp.watch('app/**/*.jsx',['frontendTest']);
+  gulp.watch('app/**/*.styl',['styles']);
 });
 
-gulp.task('default',['frontendTest','compressHTML','scripts','watch']);
+gulp.task('default',['frontendTest', 'styles','compressHTML','scripts','watch']);
