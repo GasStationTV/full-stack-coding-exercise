@@ -12,6 +12,6 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('./dist'));
 app.use(require('./server/controllers'));
 
-app.listen(3003,function(){
+app.listen(3004,function(){
 	console.log('express server listening on port: ',this.address().port);
 });
