@@ -10,6 +10,7 @@ import FlagModal from './FlagModal';
 import ConfirmModal from './ConfirmModal';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
+import utils from '../../utils';
 
 class SiteView extends React.Component {
   constructor(props) {
@@ -152,7 +153,7 @@ class SiteView extends React.Component {
                     key={flag._id}
                     style={{
                       padding: '5px 0 5px 10px',
-                      background: this.isOdd(index)
+                      background: utils.isOdd(index)
                         ? 'rgba(220,220,220,.5)'
                         : 'none'
                     }}
@@ -161,10 +162,10 @@ class SiteView extends React.Component {
                       <span>{flag.type}</span>
                     </Col>
                     <Col xs={3} md={3} lg={3}>
-                      <span>{this.formatDate(flag.startDate)}</span>
+                      <span>{utils.formatDate(flag.startDate)}</span>
                     </Col>
                     <Col xs={3} md={3} lg={3}>
-                      <span>{this.formatDate(flag.endDate)}</span>
+                      <span>{utils.formatDate(flag.endDate)}</span>
                     </Col>
                     <Col xs={1} md={1} lg={1}>
                       <Edit

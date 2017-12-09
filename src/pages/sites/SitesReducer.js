@@ -1,22 +1,22 @@
 import { createAction, createReducer } from 'redux-act';
 import sitesService from '../../services/SitesService';
 
-export const loadStart = createAction('SITES_LOAD_START');
-export const loadFail = createAction('SITES_LOAD_FAIL');
-export const loadSuccess = createAction('SITES_LOAD_SUCCESS');
+export const requestStart = createAction('SITES_REQUEST_START');
+export const requestFail = createAction('SITES_REQUEST_FAIL');
+export const requestSuccess = createAction('SITES_REQUEST_SUCCESS');
 
 export const load = () => dispatch => {
-  dispatch(loadStart());
+  dispatch(requestStart());
   return sitesService
     .getSites()
     .then(sites => {
       console.log('Sites retrieved successfully', sites);
-      dispatch(loadSuccess(sites));
+      dispatch(requestSuccess(sites));
       return Promise.resolve(sites);
     })
     .catch(err => {
       console.error('Error retrieving sites', err);
-      dispatch(loadFail(err));
+      dispatch(requestFail(err));
       return Promise.reject(err);
     });
 };
@@ -29,15 +29,15 @@ const initialState = {
 
 export default createReducer(
   {
-    [loadFail]: (state, payload) => ({
+    [requestFail]: (state, payload) => ({
       ...initialState,
       error: payload
     }),
-    [loadStart]: () => ({
+    [requestStart]: () => ({
       ...initialState,
       loading: true
     }),
-    [loadSuccess]: (state, payload) => ({
+    [requestSuccess]: (state, payload) => ({
       ...initialState,
       list: payload
     })

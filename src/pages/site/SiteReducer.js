@@ -1,29 +1,29 @@
 import { createAction, createReducer } from 'redux-act';
 import sitesService from '../../services/SitesService';
 
-export const loadStart = createAction('SITE_LOAD_START');
-export const loadFail = createAction('SITE_LOAD_FAIL');
-export const loadSuccess = createAction('SITE_LOAD_SUCCESS');
+export const requestStart = createAction('SITE_REQUEST_START');
+export const requestFail = createAction('SITE_REQUEST_FAIL');
+export const requestSuccess = createAction('SITE_REQUEST_SUCCESS');
 
 export const load = id => (dispatch, getState) => {
   // check state to see if it exists first
   const site =
     getState().sites && getState().sites.list.find(s => id === s._id);
   if (site) {
-    dispatch(loadSuccess(site));
+    dispatch(requestSuccess(site));
     return Promise.resolve(site);
   }
-  dispatch(loadStart());
+  dispatch(requestStart());
   return sitesService
     .getSite(id)
     .then(site => {
       console.log('Site retrieved successfully', site);
-      dispatch(loadSuccess(site));
+      dispatch(requestSuccess(site));
       return Promise.resolve(site);
     })
     .catch(err => {
       console.error('Error retrieving site', err);
-      dispatch(loadFail(err));
+      dispatch(requestFail(err));
       return Promise.reject(err);
     });
 };
@@ -33,7 +33,7 @@ export const update = (id, site) => (dispatch, getState) => {
     .updateSite(id, site)
     .then(newSite => {
       console.log('what is my res here?', newSite);
-      dispatch(loadSuccess(newSite));
+      dispatch(requestSuccess(newSite));
       return Promise.resolve(newSite);
     })
     .catch(err => {
@@ -51,15 +51,15 @@ const initialState = {
 
 export default createReducer(
   {
-    [loadFail]: (state, payload) => ({
+    [requestFail]: (state, payload) => ({
       ...initialState,
       error: payload
     }),
-    [loadStart]: () => ({
+    [requestStart]: () => ({
       ...initialState,
       loading: true
     }),
-    [loadSuccess]: (state, payload) => ({
+    [requestSuccess]: (state, payload) => ({
       ...initialState,
       data: payload
     })
