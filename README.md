@@ -4,6 +4,9 @@
 2. Run `npm start`
 3. Point browser to `http://localhost:9000`
 
+* MongoDB version: 3.4.10
+* Node version: 8.6.0
+
 # GSTV Full Stack Coding Exercise
 
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
