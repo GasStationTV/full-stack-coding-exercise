@@ -22,13 +22,6 @@ class SiteView extends React.Component {
     this.removeFlag = this.removeFlag.bind(this);
   }
 
-  formatDate(date) {
-    if (date) {
-      return new Date(date).toLocaleDateString();
-    }
-    return 'N/A';
-  }
-
   get filteredFlags() {
     return this.props.flags.filter(flag => {
       const start = flag.startDate;
@@ -53,6 +46,15 @@ class SiteView extends React.Component {
     });
   }
 
+  get initialFormValues() {
+    const { type, startDate, endDate } = this.state.currentFlag;
+    return {
+      type,
+      startDate: startDate ? new Date(startDate) : {},
+      endDate: endDate ? new Date(endDate) : {}
+    };
+  }
+
   closeModal(modal) {
     this.setState({
       [modal]: false,
@@ -60,10 +62,10 @@ class SiteView extends React.Component {
     });
   }
 
-  openModal(modal, flag) {
+  openModal(modal, flag = {}) {
     this.setState({
       [modal]: true,
-      currentFlag: flag || {}
+      currentFlag: flag
     });
   }
 
@@ -78,6 +80,7 @@ class SiteView extends React.Component {
     } else {
       updatedFlags = [...flags, newFlag];
     }
+    // update site object and update db
     const newSite = this.props.site;
     newSite.flags = updatedFlags;
     this.props.updateSite(this.props.site._id, newSite);
@@ -85,20 +88,12 @@ class SiteView extends React.Component {
   }
 
   removeFlag(id) {
+    // filter out deleted flag and update db
     const updatedFlags = this.props.flags.filter(flag => flag._id !== id);
     let newSite = this.props.site;
     newSite.flags = updatedFlags;
     this.props.updateSite(this.props.site._id, newSite);
     this.closeModal('confirmModalOpen');
-  }
-
-  get initialFormValues() {
-    const { type, startDate, endDate } = this.state.currentFlag;
-    return {
-      type,
-      startDate: startDate ? new Date(startDate) : {},
-      endDate: endDate ? new Date(endDate) : {}
-    };
   }
 
   render() {
@@ -128,7 +123,10 @@ class SiteView extends React.Component {
           initialValues={this.initialFormValues}
         />
         {flags && this.filteredFlags.length > 0 ? (
-          <Paper zDepth={1} style={{ padding: '20px 0', marginTop: '30px' }}>
+          <Paper
+            zDepth={1}
+            style={{ padding: '20px 0 5px 0', marginTop: '30px' }}
+          >
             <Grid fluid>
               <Row style={{ paddingLeft: '10px' }}>
                 <Col xs={4} md={4} lg={4} style={{ textAlign: 'left' }}>
@@ -150,7 +148,15 @@ class SiteView extends React.Component {
               <Divider />
               <List>
                 {this.filteredFlags.map((flag, index) => (
-                  <Row key={flag._id} style={{ padding: '5px 0 5px 10px' }}>
+                  <Row
+                    key={flag._id}
+                    style={{
+                      padding: '5px 0 5px 10px',
+                      background: this.isOdd(index)
+                        ? 'rgba(220,220,220,.5)'
+                        : 'none'
+                    }}
+                  >
                     <Col xs={4} md={4} lg={4} style={{ textAlign: 'left' }}>
                       <span>{flag.type}</span>
                     </Col>

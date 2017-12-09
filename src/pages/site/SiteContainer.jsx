@@ -21,12 +21,14 @@ class SiteContainer extends React.Component {
 }
 
 SiteContainer.propTypes = {
+  error: PropTypes.object,
+  loading: PropTypes.bool,
   loadSite: PropTypes.func
 };
 
 const mapStateToProps = state => ({
-  error: state.sites.error,
-  loading: state.sites.loading,
+  error: state.site.error,
+  loading: state.site.loading,
   site: state.site.data,
   flags: state.site.data.flags
 });

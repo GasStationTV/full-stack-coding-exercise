@@ -40,7 +40,8 @@
   },
   "scripts": {
     "dev-server": "npm run build && nodemon ./server",
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "npm run build && node ./server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
