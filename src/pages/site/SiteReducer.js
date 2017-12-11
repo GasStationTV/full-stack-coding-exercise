@@ -15,7 +15,7 @@ export const load = id => (dispatch, getState) => {
   }
   dispatch(requestStart());
   return sitesService
-    .getSite(id)
+    .get(`site/${id}`)
     .then(site => {
       console.log('Site retrieved successfully', site);
       dispatch(requestSuccess(site));
@@ -30,9 +30,9 @@ export const load = id => (dispatch, getState) => {
 
 export const update = (id, site) => (dispatch, getState) => {
   return sitesService
-    .updateSite(id, site)
+    .update(id, site)
     .then(newSite => {
-      console.log('what is my res here?', newSite);
+      console.log('Site successfully updated', newSite);
       dispatch(requestSuccess(newSite));
       return Promise.resolve(newSite);
     })

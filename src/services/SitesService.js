@@ -5,23 +5,15 @@ class SitesService {
     this.apiUrl = 'http://localhost:9000/api/';
   }
 
-  getSites() {
+  get(url) {
     return axios({
       baseURL: this.apiUrl,
       method: 'GET',
-      url: 'sites'
+      url
     }).then(res => res.data);
   }
 
-  getSite(id) {
-    return axios({
-      baseURL: this.apiUrl,
-      method: 'GET',
-      url: `site/${id}`
-    }).then(res => res.data);
-  }
-
-  updateSite(id, site) {
+  update(id, site) {
     return axios({
       baseURL: this.apiUrl,
       method: 'POST',

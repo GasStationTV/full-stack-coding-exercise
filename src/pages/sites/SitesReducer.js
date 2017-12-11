@@ -8,7 +8,7 @@ export const requestSuccess = createAction('SITES_REQUEST_SUCCESS');
 export const load = () => dispatch => {
   dispatch(requestStart());
   return sitesService
-    .getSites()
+    .get('sites')
     .then(sites => {
       console.log('Sites retrieved successfully', sites);
       dispatch(requestSuccess(sites));
