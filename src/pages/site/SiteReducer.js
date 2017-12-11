@@ -28,13 +28,37 @@ export const load = id => (dispatch, getState) => {
     });
 };
 
-export const update = (id, site) => (dispatch, getState) => {
+export const update = newItem => (dispatch, getState) => {
+  let { data } = getState().site;
+  if (newItem._id) {
+    data.flags = data.flags.map(
+      item => (item._id === newItem._id ? newItem : item)
+    );
+  } else {
+    data.flags = [...data.flags, newItem];
+  }
+  console.log('data after update????', data);
   return sitesService
-    .update(id, site)
-    .then(newSite => {
-      console.log('Site successfully updated', newSite);
-      dispatch(requestSuccess(newSite));
-      return Promise.resolve(newSite);
+    .update(data._id, data)
+    .then(newData => {
+      console.log('Site successfully updated', newData);
+      dispatch(requestSuccess(newData));
+      return Promise.resolve(newData);
+    })
+    .catch(err => {
+      return Promise.reject(err);
+    });
+};
+
+export const remove = id => (dispatch, getState) => {
+  let { data } = getState().site;
+  data.flags = data.flags.filter(item => item._id !== id);
+  return sitesService
+    .update(data._id, data)
+    .then(newData => {
+      console.log('Site successfully removed', newData);
+      dispatch(requestSuccess(newData));
+      return Promise.resolve(newData);
     })
     .catch(err => {
       return Promise.reject(err);

@@ -51,8 +51,8 @@ class SiteView extends React.Component {
     const { type, startDate, endDate } = this.state.currentFlag;
     return {
       type,
-      startDate: startDate ? new Date(startDate) : {},
-      endDate: endDate ? new Date(endDate) : {}
+      startDate: startDate ? new Date(startDate) : null,
+      endDate: endDate ? new Date(endDate) : null
     };
   }
 
@@ -71,29 +71,12 @@ class SiteView extends React.Component {
   }
 
   onSubmit(newFlag) {
-    const { flags } = this.props;
-    let updatedFlags;
-    // if editing existing flag update in array, else add to array
-    if (newFlag._id) {
-      updatedFlags = this.props.flags.map(
-        flag => (flag._id === newFlag._id ? newFlag : flag)
-      );
-    } else {
-      updatedFlags = [...flags, newFlag];
-    }
-    // update site object and update db
-    const newSite = this.props.site;
-    newSite.flags = updatedFlags;
-    this.props.updateSite(this.props.site._id, newSite);
+    this.props.updateSite(newFlag);
     this.closeModal('flagModalOpen');
   }
 
   removeFlag(id) {
-    // filter out deleted flag and update db
-    const updatedFlags = this.props.flags.filter(flag => flag._id !== id);
-    let newSite = this.props.site;
-    newSite.flags = updatedFlags;
-    this.props.updateSite(this.props.site._id, newSite);
+    this.props.removeFlag(id);
     this.closeModal('confirmModalOpen');
   }
 
@@ -210,7 +193,8 @@ class SiteView extends React.Component {
 
 SiteView.propTypes = {
   site: PropTypes.object,
-  flags: PropTypes.array
+  flags: PropTypes.array,
+  removeFlag: PropTypes.func
 };
 
 export default SiteView;

@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { load as loadSite, update as updateSite } from './SiteReducer';
+import {
+  load as loadSite,
+  update as updateSite,
+  remove as removeFlag
+} from './SiteReducer';
 import SiteView from './SiteView';
 
 class SiteContainer extends React.Component {
@@ -35,6 +39,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   loadSite,
+  removeFlag,
   updateSite
 };
 
